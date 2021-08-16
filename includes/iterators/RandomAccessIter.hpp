@@ -11,7 +11,7 @@ class	RandomAccessIter
 		typedef Reference						reference;
 		typedef RandomAccessIter<T, Pointer, Reference>	current;
 		typedef size_t							size_type;
-		typedef RandomAccessIter<T, *T, &T>		iterator;
+		typedef RandomAccessIter<T, T*, T&>		iterator;
 	private:
 		pointer	_arr;
 	public:
@@ -57,6 +57,11 @@ class	RandomAccessIter
 		{
 			return (this->_arr[index]);
 		}
+
+		const value_type &operator[] (const int index) const
+		{
+			return (this->_arr[index]);
+		}
 		//참조 연산자(*, ->)
 		reference operator* () const
 		{
@@ -78,13 +83,48 @@ class	RandomAccessIter
 		{
 			current temp(*this);
 			temp._arr -= n;
+			return (temp);
 		}
 		current operator+=(size_type n)
 		{
 			this->_arr += n;
 			return (this);
 		}
-		//비교 연산자(==, !=, >, <, <=, >=)
+		current operator-=(size_type n)
+		{
+			this->_arr -= n;
+			return (this);
+		}
+
+		bool operator==(const current &temp) const
+		{
+			return (this->_arr == temp._arr);
+		}
+
+		bool operator!=(const current &temp) const
+		{
+			return (this->_arr != temp._arr);
+		}
+
+		bool operator>(const current &temp) const
+		{
+			return (this->_arr > temp._arr);
+		}
+
+		bool operator<(const current &temp) const
+		{
+			return (this->_arr < temp._arr);
+		}
+
+		bool operator<=(const current &temp) const
+		{
+			return (this->_arr <= temp._arr);
+		}
+
+		bool operator>=(const current &temp) const
+		{
+			return (this->_arr >= temp._arr);
+		}
 };
 }
 #endif
