@@ -12,6 +12,7 @@ class	RandomAccessIter
 		typedef RandomAccessIter<T, Pointer, Reference>	current;
 		typedef size_t							size_type;
 		typedef RandomAccessIter<T, T*, T&>		iterator;
+		typedef RandomAccessIter<T, const T*, const T&> const_iterator;
 	private:
 		pointer	_arr;
 	public:
