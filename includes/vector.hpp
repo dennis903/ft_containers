@@ -25,7 +25,7 @@ class	vector
 		allocate_type<value_type>	alloc;
 	public:
 		vector() : _alloc(NULL) {};
-		
+		vector()
 };
 }
 #endif
