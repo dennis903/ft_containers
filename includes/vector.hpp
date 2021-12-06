@@ -15,7 +15,9 @@ class	vector
 	typedef const value_type&		const_reference;
 	typedef value_type*				pointer;
 	typedef const value_type*		const_pointer;
-	
+
+
+
 };
 }
 #endif
