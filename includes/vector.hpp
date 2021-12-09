@@ -1,8 +1,8 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 # include <memory>
-# include <./iterators/RandomAccessIter.hpp>
-# include <./iterators/ReverseIter.hpp>
+# include "./iterators/RandomAccessIter.hpp"
+# include "./iterators/ReverseIter.hpp"
 namespace ft
 {
 template<typename T, typename _Alloc = std::allocator<T> >
@@ -22,10 +22,26 @@ class	vector
 	typedef ReverseIter<const iterator>		const_reverse_iterator;
 
 	private:
-		allocate_type<value_type>	alloc;
+		pointer _arr;
+		_Alloc  _alloc;
 	public:
-		vector() : _alloc(NULL) {};
-		vector()
+		explicit vector (const allocate_type& alloc = allocate_type())
+		: _arr(0), _alloc(alloc)
+		{
+			_arr = this->_alloc.allocate(0);
+		}
+		explicit vector (size_type length, value_type val = 0, const allocate_type &alloc = allocate_type())
+		: _arr(0), _alloc(alloc)
+		{
+			_arr = this->_alloc.allocate(length);
+			if (length == 0)
+				_arr[0] = val;
+			else
+			{
+				for (size_type i = 0; i < length; i++)
+					_arr[i] = val;
+			}
+		}
 };
 }
 #endif

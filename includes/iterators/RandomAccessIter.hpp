@@ -2,7 +2,7 @@
 # define RANDOMACCESSITER_HPP
 namespace ft
 {
-template<typename T, typename Pointer, typename Reference>
+template<typename T, typename Pointer = T*, typename Reference = T&>
 class	RandomAccessIter
 {
 	public:
@@ -17,7 +17,7 @@ class	RandomAccessIter
 		pointer	_arr;
 	public:
 		RandomAccessIter() : _arr(NULL) {}
-		RamdomAccessIter(const pointer arr) { this->_arr = arr; }
+		RandomAccessIter(const pointer arr) { this->_arr = arr; }
 		RandomAccessIter(const RandomAccessIter &_Iter) { *this = _Iter; }
 		~RandomAccessIter() {}
 		//대입 연산자(=)
