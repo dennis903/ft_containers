@@ -17,7 +17,7 @@ class	RandomAccessIter
 		pointer	_arr;
 	public:
 		RandomAccessIter() : _arr(NULL) {}
-		RandomAccessIter(const pointer arr) { this->_arr = arr; }
+		explicit RandomAccessIter(const pointer arr) : _arr(arr) {}
 		RandomAccessIter(const RandomAccessIter &_Iter) { *this = _Iter; }
 		~RandomAccessIter() {}
 		//대입 연산자(=)
@@ -38,7 +38,7 @@ class	RandomAccessIter
 		{
 			current temp(this->_arr);
 			this->_arr += 1;
-			return (temp);
+			return (*this);
 		}
 		// *a++ 나중에 테스트 해보기
 		//감소 연산자(후위, 전위, *a--)

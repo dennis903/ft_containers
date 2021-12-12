@@ -1,15 +1,26 @@
+#include <algorithm>
 #include <iostream>
+#include <numeric>
+#include <string>
 #include <vector>
-#include "./includes/vector.hpp"
+#include "includes/vector.hpp"
 
-int         main()
+int main()
 {
-	ft::vector<int> vt(10, 5);
-	ft::vector<int> vt2;
+	{
+		std::vector<int> test;
 
-	vt2 = vt;
-	std::cout << &vt << std::endl;
-	std::cout << &vt2 << std::endl;
-	for (int i = 0; i < 10; i++)
-		std::cout << vt2[i] << std::endl;
+		test.push_back(1);
+		test.push_back(2);
+		test.push_back(3);
+		test.push_back(4);
+
+		std::cout << test.size() << " " << test.capacity() << std::endl;
+		test.clear();
+		std::cout << test.size() << " " << test.capacity() << std::endl;
+		for (std::vector<int>::iterator it = test.begin(); it != test.end(); it++)
+			std::cout << &it << std::endl;
+		std::vector<int>::iterator it2 = test.begin();
+			std::cout << &it2 <<std::endl;
+	}
 }
