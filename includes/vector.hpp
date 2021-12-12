@@ -266,7 +266,40 @@ class	vector
 
 		iterator insert( iterator pos, const T& value )
 		{
-			
+			if (this->_size > 0)
+			{
+				for (size_type i = 0; i < this->_size; i++)
+				{
+					if (pos == iterator(this->_arr))
+					{
+						ft::vector<value_type> copy(*this);
+						if (this->_size == this->_capacity)
+							this->_alloc.deallocate(this->_arr, this->_capacity);
+						this->_size += 1;
+						this->_capacity *= 2;
+						if (this->_capacity == 0)
+							this->_capacity = 1;
+						this->_arr = this->_alloc.allocate(_capacity);
+						for (size_type j = 0; j < this->_size; j++)
+						{
+							if (j != i)
+								this->_arr[j] = copy[j];
+							else if (j == i)
+								this->_arr[j] = value;
+						}
+						return (iterator(&this->_arr[i]));
+					}
+				}
+			}
+			else
+			{
+				this->_size += 1;
+				this->_capacity += 1;
+				this->_arr = this->_alloc.allocate(this->_capacity);
+				this->_arr[0] = value;
+				return (iterator(this->_arr));
+			}
+			return (iterator(0));
 		}
 };
 }
