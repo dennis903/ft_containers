@@ -1,10 +1,10 @@
 #ifndef REVERSEITER_HPP
 # define REVERSEITER_HPP
-# include <iterator_traits.hpp>
+# include "iterator_traits.hpp"
 
 namespace ft
 {
-template<typename T, typename Pointer, typename Reference>
+template<typename T, typename Pointer = T*, typename Reference = T&>
 class	ReverseIter
 {
 	public:
@@ -14,7 +14,7 @@ class	ReverseIter
 		typedef ReverseIter<T, Pointer, Reference> current;
 		typedef size_t				size_type;
 		typedef ReverseIter<T, T*, T&>	iterator;
-		typedef ReverseIter<T, const *T, const &T> const_reverse_iterator;
+		typedef ReverseIter<T, const T*, const T&> const_reverse_iterator;
 	private:
 		pointer	_arr;
 	public:
@@ -26,7 +26,7 @@ class	ReverseIter
 		current &operator=(const ReverseIter &_Iter)
 		{
 			if (this == &_Iter)
-				return (*iter);
+				return (*this);
 			this->_arr = _Iter._arr;
 			return (*this);
 		}
