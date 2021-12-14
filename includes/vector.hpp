@@ -310,7 +310,7 @@ class	vector
 
 		iterator insert (iterator pos, size_type count, T& value)
 		{
-			size_type
+			
 		}
 };
 }
