@@ -330,8 +330,8 @@ class	vector
 		{
 			size_type first_loc = end() - pos;
 			size_type size = size() + count;
-
 			resize(size);
+			for (size_type i = )
 		}
 };
 }
