@@ -264,6 +264,24 @@ class	vector
 			this->_size = 0;
 		}
 
+		void	resize(size_type count, T value = T())
+		{
+			if (count > capacity())
+			{
+				if (n >= this->_capacity * 2)
+					reserve(n);
+				else
+					reserve(this->_capacity * 2);
+			}
+			if (count < size())
+				for (size_type i = count; i < size(); i++)
+					this->_alloc.distroy(&_arr[i]);
+			else
+				for (size_type i = size(); i < count; i++)
+					this->_arr[i] = value;
+			this->_size = count;
+		}
+
 		iterator insert( iterator pos, const T& value ) // 나중에 좀 더 보기
 		{
 			if (this->_size > 0)
@@ -308,9 +326,12 @@ class	vector
 			return (iterator(0));
 		}
 
-		iterator insert (iterator pos, size_type count, T& value)
+		iterator insert(iterator pos, size_type count, T& value)
 		{
-			
+			size_type first_loc = end() - pos;
+			size_type size = size() + count;
+
+			resize(size);
 		}
 };
 }
