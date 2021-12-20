@@ -268,8 +268,8 @@ class	vector
 		{
 			if (count > capacity())
 			{
-				if (n >= this->_capacity * 2)
-					reserve(n);
+				if (count >= this->_capacity * 2)
+					reserve(count);
 				else
 					reserve(this->_capacity * 2);
 			}
@@ -282,56 +282,22 @@ class	vector
 			this->_size = count;
 		}
 
+		void insert(iterator pos, size_type count, T& value)
+		{
+			size_type back_count = end() - pos;
+			size_type back = size() + count - 1;
+			size_type index = pos - begin();
+	
+			resize(size() + count);
+			for (size_type i = 0; i < back_count; i++)
+				this->_arr[back - i] = this->_arr[size() - count - i];
+			for (size_type i = index; i < index + count; i++)
+				this->_arr[i] = value;
+		}
+		
 		iterator insert( iterator pos, const T& value ) // 나중에 좀 더 보기
 		{
-			if (this->_size > 0)
-			{
-				for (size_type i = 0; i < this->_size; i++)
-				{
-					if (pos == iterator(this->_arr + i))
-					{
-						ft::vector<value_type> copy(*this);
-						if (this->_size == this->_capacity)
-						{
-							this->_alloc.deallocate(this->_arr, this->_capacity);
-						}
-						this->_size += 1;
-						this->_capacity *= 2;
-						if (this->_capacity == 0)
-							this->_capacity = 1;
-						this->_arr = this->_alloc.allocate(_capacity);
-						bool seat = false;
-						for (size_type j = 0; j < this->_size; j++)
-						{
-							if (j == i)
-							{
-								seat = true;
-								this->_arr[j] = value;
-							}
-							else
-								this->_arr[j] = copy[j - seat];
-						}
-						return (iterator(&this->_arr[i]));
-					}
-				}
-			}
-			else
-			{
-				this->_size += 1;
-				this->_capacity += 1;
-				this->_arr = this->_alloc.allocate(this->_capacity);
-				this->_arr[0] = value;
-				return (iterator(this->_arr));
-			}
-			return (iterator(0));
-		}
-
-		iterator insert(iterator pos, size_type count, T& value)
-		{
-			size_type first_loc = end() - pos;
-			size_type size = size() + count;
-			resize(size);
-			for (size_type i = )
+			
 		}
 };
 }

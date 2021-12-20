@@ -10,10 +10,24 @@ int main()
 	{ //resize
 		std::vector<int> test;
 
-		test.push_back(1);
-		test.push_back(2);
-		test.push_back(3);
-		test.push_back(4);
+		test.insert(test.begin(), 1);
+		test.insert(test.begin() + 1, 2);
+		test.insert(test.begin(), 3);
+		test.insert(test.begin(), 4);
+
+		test.resize(8, 6);
+		std::cout << test.size() << std::endl;
+		for (int i = 0; i < 8; i++)
+			std::cout << test[i] << " ";
+		std::cout << std::endl;
+	}
+	{ //resize
+		ft::vector<int> test;
+
+		test.insert(test.begin(), 1);
+		test.insert(test.begin() + 1, 2);
+		test.insert(test.begin(), 3);
+		test.insert(test.begin(), 4);
 
 		test.resize(8, 6);
 		std::cout << test.size() << std::endl;
