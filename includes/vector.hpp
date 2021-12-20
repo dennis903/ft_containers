@@ -275,30 +275,76 @@ class	vector
 			}
 			if (count < size())
 				for (size_type i = count; i < size(); i++)
-					this->_alloc.distroy(&_arr[i]);
+					this->_alloc.destroy(&_arr[i]);
 			else
 				for (size_type i = size(); i < count; i++)
 					this->_arr[i] = value;
 			this->_size = count;
 		}
 
-		void insert(iterator pos, size_type count, T& value)
+		void insert(iterator pos, size_type count, const T& value)
 		{
-			size_type back_count = end() - pos;
+			size_type back_count = 0;
 			size_type back = size() + count - 1;
-			size_type index = pos - begin();
-	
+			size_type index = 0;
+
+			for (iterator it = end(); it != pos; it--)
+				back_count++;
+			for (iterator it = begin(); it != pos; it++)
+				index++;
 			resize(size() + count);
 			for (size_type i = 0; i < back_count; i++)
-				this->_arr[back - i] = this->_arr[size() - count - i];
+				this->_arr[back - i] = this->_arr[back - count - i];
 			for (size_type i = index; i < index + count; i++)
 				this->_arr[i] = value;
 		}
 		
 		iterator insert( iterator pos, const T& value ) // 나중에 좀 더 보기
 		{
-			
+			size_type back_count = 0;
+			size_type back = size();
+			size_type index = 0;
+
+			for (iterator it = end(); it != pos; it--)
+				back_count++;
+			for (iterator it = begin(); it != pos; it++)
+				index++;
+			resize(size() + 1);
+			for (size_type i = 0; i < back_count; i++)
+				this->_arr[back - i] = this->_arr[back - 1 - i];
+			this->_arr[index] = value;
+			return (iterator(&this->_arr[index]));
 		}
-};
+
+		template< class InputIt >
+		void insert( iterator pos, InputIt first, InputIt last )
+		{
+			size_type back_count = 0;
+			size_type count = 0;
+			size_type back;
+			size_type index = 0;
+
+			for (iterator it = first; it != last; it++)
+				count++;
+			for (iterator it = end(); it != pos; it--)
+				back_count++;
+			for (iterator it = begin(); it != pos; it++)
+				index++;
+			back = size() + count - 1;
+			resize(size() + count);
+			for (size_type i = 0; i < back_count; i++)
+				this->_arr[back - i] = this->_arr[back - count - i];
+			for (size_type i = index; i < index + count; i++)
+			{
+				this->_arr[i] = *(first++);
+			}
+		}
+
+		void push_back( const T& value )
+		{
+			resize(size() + 1);
+			this->_arr[size() - 1] = value;
+		}
+	};
 }
 #endif

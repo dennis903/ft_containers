@@ -35,7 +35,7 @@ class	ReverseIter
 			this->_arr -= 1;
 			return (*this);
 		}
-		current &operator++(int)
+		current operator++(int)
 		{
 			current temp(this->_arr);
 			this->_arr -= 1;
@@ -46,7 +46,7 @@ class	ReverseIter
 			this->_arr += 1;
 			return (*this);
 		}
-		current &operator--(int)
+		current operator--(int)
 		{
 			current temp(this->_arr);
 			this->_arr += 1;

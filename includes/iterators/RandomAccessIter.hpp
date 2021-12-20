@@ -34,11 +34,11 @@ class	RandomAccessIter
 			this->_arr += 1;
 			return (*this);
 		}
-		current &operator++(int)
+		current operator++(int)
 		{
 			current temp(this->_arr);
 			this->_arr += 1;
-			return (*this);
+			return (temp);
 		}
 		// *a++ 나중에 테스트 해보기
 		//감소 연산자(후위, 전위, *a--)
@@ -46,11 +46,12 @@ class	RandomAccessIter
 		{
 			this->_arr -= 1;
 			return (*this);
+			
 		}
-		current &operator--(int)
+		current operator--(int)
 		{
-			current temp(this->_arr);
-			this->_arr -= 1;
+			current temp(*this);
+			this->_arr--;
 			return (temp);
 		}
 		//첨자 연산자([])
@@ -85,6 +86,7 @@ class	RandomAccessIter
 			current temp(*this);
 			temp._arr -= n;
 			return (temp);
+			return (*this);
 		}
 		current operator+=(size_type n)
 		{
