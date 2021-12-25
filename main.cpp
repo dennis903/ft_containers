@@ -5,38 +5,259 @@
 #include <vector>
 #include "includes/vector.hpp"
 
+void	print_container(std::vector<int> &c)
+{
+	for (size_t i = 0; i < c.size(); i++)
+	{
+		std::cout << c[i] << " ";
+	}
+	std::cout << std::endl;
+}
+void	ft_print_container(ft::vector<int> &c)
+{
+	for (size_t i = 0; i < c.size(); i++)
+	{
+		std::cout << c[i] << " ";
+	}
+	std::cout << std::endl;
+}
+
 int main()
 {
+	{ // ==
+		std::cout << "=========== std ===========" << std::endl;
+		std::vector<int> vt;
+		vt.push_back(1);
+		vt.push_back(2);
+		vt.push_back(5);
+		vt.push_back(4);
+		vt.push_back(5);
+		vt.push_back(6);
+		vt.push_back(7);
+		vt.push_back(8);
+		vt.push_back(9);
+		vt.push_back(11);
+		std::vector<int> vt2;
+		vt2.push_back(1);
+		vt2.push_back(2);
+		vt2.push_back(3);
+		vt2.push_back(5);
+		vt2.push_back(5);
+		vt2.push_back(6);
+		vt2.push_back(7);
+		vt2.push_back(8);
+		vt2.push_back(9);
+		vt2.push_back(10);
+		// vt2.push_back(11);
+		bool result = vt <= vt2;
+		std::cout << result << std::endl;
+	}
+	{ // ==
+		std::cout << "=========== ft ===========" << std::endl;
+		ft::vector<int> vt;
+		vt.push_back(1);
+		vt.push_back(2);
+		vt.push_back(3);
+		vt.push_back(4);
+		vt.push_back(5);
+		vt.push_back(6);
+		vt.push_back(7);
+		vt.push_back(8);
+		vt.push_back(9);
+		vt.push_back(10);
+		ft::vector<int> vt2;
+		vt2.push_back(1);
+		vt2.push_back(2);
+		vt2.push_back(3);
+		vt2.push_back(4);
+		vt2.push_back(5);
+		vt2.push_back(6);
+		vt2.push_back(7);
+		vt2.push_back(8);
+		vt2.push_back(9);
+		vt2.push_back(10);
+		// vt2.push_back(11);
+		bool result = vt != vt2;
+		std::cout << result << std::endl;
+	}
+	// { //swap
+	// 	std::cout << "=========== std ===========" << std::endl;
+	// 	std::vector<int> vt;
+	// 	vt.push_back(1);
+	// 	vt.push_back(2);
+	// 	vt.push_back(3);
+	// 	vt.push_back(4);
+	// 	vt.push_back(5);
+	// 	vt.push_back(6);
+	// 	vt.push_back(7);
+	// 	vt.push_back(8);
+	// 	vt.push_back(9);
+	// 	vt.push_back(10);
+	// 	std::vector<int> vt2;
+	// 	vt2.push_back(11);
+	// 	vt2.push_back(12);
+	// 	vt2.push_back(13);
+	// 	vt2.push_back(14);
+	// 	std::cout << "--------- before swap --------" << std::endl;
+	// 	print_container(vt);
+	// 	print_container(vt2);
+	// 	vt.swap(vt2);
+	// 	std::cout << "--------- after swap --------" << std::endl;
+	// 	print_container(vt);
+	// 	print_container(vt2);
+	// }
+	// {
+	// 	std::cout << "=========== ft ===========" << std::endl;
+	// 	ft::vector<int> vt;
+	// 	vt.push_back(1);
+	// 	vt.push_back(2);
+	// 	vt.push_back(3);
+	// 	vt.push_back(4);
+	// 	vt.push_back(5);
+	// 	vt.push_back(6);
+	// 	vt.push_back(7);
+	// 	vt.push_back(8);
+	// 	vt.push_back(9);
+	// 	vt.push_back(10);
+	// 	ft::vector<int> vt2;
+	// 	vt2.push_back(11);
+	// 	vt2.push_back(12);
+	// 	vt2.push_back(13);
+	// 	vt2.push_back(14);
+	// 	std::cout << "--------- before swap --------" << std::endl;
+	// 	ft_print_container(vt);
+	// 	ft_print_container(vt2);
+	// 	vt.swap(vt2);
+	// 	std::cout << "--------- after swap --------" << std::endl;
+	// 	ft_print_container(vt);
+	// 	ft_print_container(vt2);
+
+	// }
+	// { //pop_back
+	// 	std::cout << "=========== std ===========" << std::endl;
+	// 	std::vector<int> vt;
+	// 	vt.push_back(1);
+	// 	vt.push_back(2);
+	// 	vt.push_back(3);
+	// 	vt.push_back(4);
+	// 	vt.push_back(5);
+	// 	vt.push_back(6);
+	// 	vt.push_back(7);
+	// 	vt.push_back(8);
+	// 	vt.push_back(9);
+	// 	vt.push_back(10);
+	// 	vt.pop_back();
+	// 	vt.pop_back();
+	// 	print_container(vt);
+	// 	std::cout << "size: " << vt.size() << std::endl;
+	// 	std::cout << "capacity: " << vt.capacity() << std::endl;
+	// }
+	// {
+	// 	std::cout << "=========== ft ===========" << std::endl;
+	// 	ft::vector<int> vt;
+	// 	vt.push_back(1);
+	// 	vt.push_back(2);
+	// 	vt.push_back(3);
+	// 	vt.push_back(4);
+	// 	vt.push_back(5);
+	// 	vt.push_back(6);
+	// 	vt.push_back(7);
+	// 	vt.push_back(8);
+	// 	vt.push_back(9);
+	// 	vt.push_back(10);
+	// 	vt.pop_back();
+	// 	vt.pop_back();
+	// 	ft_print_container(vt);
+	// 	std::cout << "size: " << vt.size() << std::endl;
+	// 	std::cout << "capacity: " << vt.capacity() << std::endl;
+
+	// }
+	// { //erase
+	// 	std::cout << "=========== std ===========" << std::endl;
+	// 	std::vector<int> vt;
+	// 	vt.push_back(1);
+	// 	vt.push_back(2);
+	// 	vt.push_back(3);
+	// 	vt.push_back(4);
+	// 	vt.push_back(5);
+	// 	vt.push_back(6);
+	// 	vt.push_back(7);
+	// 	vt.push_back(8);
+	// 	vt.push_back(9);
+	// 	vt.push_back(10);
+	// 	print_container(vt);
+	// 	std::cout << "size: " << vt.size() << std::endl;
+	// 	std::cout << "capacity: " << vt.capacity() << std::endl;
+	// 	std::cout << "--------- erase --------" << std::endl;
+	// 	vt.erase(vt.begin(), vt.begin() + 1);
+	// 	print_container(vt);
+	// 	std::cout << "size: " << vt.size() << std::endl;
+	// 	std::cout << "capacity: " << vt.capacity() << std::endl;
+	// 	std::cout << "--------- erase2 --------" << std::endl;
+	// 	vt.erase(vt.begin() + 2, vt.begin() + 5);
+	// 	print_container(vt);
+	// 	std::cout << "size: " << vt.size() << std::endl;
+	// 	std::cout << "capacity: " << vt.capacity() << std::endl;
+	// 	std::cout << "\n";
+	// }
+	// {
+	// 	std::cout << "=========== ft ===========" << std::endl;
+	// 	ft::vector<int> vt;
+	// 	vt.push_back(1);
+	// 	vt.push_back(2);
+	// 	vt.push_back(3);
+	// 	vt.push_back(4);
+	// 	vt.push_back(5);
+	// 	vt.push_back(6);
+	// 	vt.push_back(7);
+	// 	vt.push_back(8);
+	// 	vt.push_back(9);
+	// 	vt.push_back(10);
+	// 	ft_print_container(vt);
+	// 	std::cout << "size: " << vt.size() << std::endl;
+	// 	std::cout << "capacity: " << vt.capacity() << std::endl;
+	// 	std::cout << "--------- erase --------" << std::endl;
+	// 	vt.erase(vt.begin(), vt.begin() + 1);
+	// 	ft_print_container(vt);
+	// 	std::cout << "size: " << vt.size() << std::endl;
+	// 	std::cout << "capacity: " << vt.capacity() << std::endl;
+	// 	std::cout << "--------- erase2 --------" << std::endl;
+	// 	vt.erase(vt.begin() + 2, vt.begin() + 5);
+	// 	ft_print_container(vt);
+	// 	std::cout << "size: " << vt.size() << std::endl;
+	// 	std::cout << "capacity: " << vt.capacity() << std::endl;
+
+	// }
 	//insert
-	{
-		std::vector<int> test(4, 10);
-		std::vector<int> test2;
-		std::vector<int>::iterator it = test.begin();
+	// {
+	// 	std::vector<int> test(4, 10);
+	// 	std::vector<int> test2;
+	// 	std::vector<int>::iterator it = test.begin();
 
-		test2.push_back(1);
-		test2.push_back(2);
-		test2.push_back(3);
-		test2.push_back(4);
-		test.insert(it+2, test2.begin(), test2.end());
-		for (size_t i = 0; i < test.size(); i++)
-			std::cout << test[i] << " " ;
-		std::cout << std::endl;
-	}
-	{
-		std::cout << "======= ft ========" << std::endl;
-		ft::vector<int> test(4, 10);
-		ft::vector<int> test2;
-		ft::vector<int>::iterator it = test.begin();
+	// 	test2.push_back(1);
+	// 	test2.push_back(2);
+	// 	test2.push_back(3);
+	// 	test2.push_back(4);
+	// 	test.insert(it+2, test2.begin(), test2.end());
+	// 	for (size_t i = 0; i < test.size(); i++)
+	// 		std::cout << test[i] << " " ;
+	// 	std::cout << std::endl;
+	// }
+	// {
+	// 	std::cout << "======= ft ========" << std::endl;
+	// 	ft::vector<int> test(4, 10);
+	// 	ft::vector<int> test2;
+	// 	ft::vector<int>::iterator it = test.begin();
 
-		test2.push_back(1);
-		test2.push_back(2);
-		test2.push_back(3);
-		test2.push_back(4);
-		test.insert(it+2, test2.begin(), test2.end());
-		for (size_t i = 0; i < test.size(); i++)
-			std::cout << test[i] << " " ;
-		std::cout << std::endl;
-	}
+	// 	test2.push_back(1);
+	// 	test2.push_back(2);
+	// 	test2.push_back(3);
+	// 	test2.push_back(4);
+	// 	test.insert(it+2, test2.begin(), test2.end());
+	// 	for (size_t i = 0; i < test.size(); i++)
+	// 		std::cout << test[i] << " " ;
+	// 	std::cout << std::endl;
+	// }
     // {
     //     ft::vector<int> test;
     //     test.insert(test.begin(), 4, 1);

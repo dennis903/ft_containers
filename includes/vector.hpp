@@ -345,6 +345,158 @@ class	vector
 			resize(size() + 1);
 			this->_arr[size() - 1] = value;
 		}
+
+		iterator erase(iterator first, iterator last)
+		{
+			size_type count = 0;
+			size_type index = 0;
+
+			for (iterator it = begin(); it != first; it++)
+				index++;
+			while (first != last)
+			{
+				this->_alloc.destroy(&this->_arr[index]);
+				index++;
+				count++;
+				first++;
+			}
+			for (size_type i = index; i < size(); i++)
+				this->_arr[i - count] = this->_arr[i];
+			resize(size() - count);
+			return (first);
+		}
+
+		iterator erase(iterator pos)
+		{
+			erase(pos, pos + 1);
+			return (pos);
+		}
+
+		void pop_back()
+		{
+			erase(end() - 1);
+		}
+
+		void swap(vector &other)
+		{
+			pointer temp_arr;
+			size_type temp_size;
+			size_type temp_capacity;
+
+			temp_arr = other._arr;
+			temp_size = other._size;
+			temp_capacity = other._capacity;
+			other._arr = this->_arr;
+			other._size = this->_size;
+			other._capacity = this->_capacity;
+			this->_arr = temp_arr;
+			this->_size = temp_size;
+			this->_capacity = temp_capacity;
+		}
 	};
+
+	template<class T, class Alloc>
+	bool operator==(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		for (size_t i = 0; i < lhs.size(); i++)
+			if (lhs[i] != rhs[i])
+				return (false);
+		return (true);
+	}
+
+	template<class T, class Alloc>
+	bool operator!=(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
+	{
+		return (!(lhs == rhs));
+	}
+
+	template<class T, class Alloc>
+	bool operator<(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+		{
+			if (lhs.size() > rhs.size())
+				return (false);
+			else
+				return (true);
+		}
+		for (size_t i = 0; i < lhs.size(); i++)
+		{
+			if (lhs[i] > rhs[i])
+				return (false);
+			else if (lhs[i] < rhs[i])
+				return (true);
+		}
+		return (false);
+	}
+
+	template<class T, class Alloc>
+	bool operator<=(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+		{
+			if (lhs.size() > rhs.size())
+				return (false);
+			else
+				return (true);
+		}
+		for (size_t i = 0; i < lhs.size(); i++)
+		{
+			if (lhs[i] > rhs[i])
+				return (false);
+			else if (lhs[i] < rhs[i])
+				return (true);
+		}
+		return (true);
+	}
+
+	template<class T, class Alloc>
+	bool operator>(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+		{
+			if (lhs.size() > rhs.size())
+				return (true);
+			else
+				return (false);
+		}
+		for (size_t i = 0; i < lhs.size(); i++)
+		{
+			if (lhs[i] > rhs[i])
+				return (true);
+			else if (lhs[i] < rhs[i])
+				return (false);
+		}
+		return (false);
+	}
+
+	template<class T, class Alloc>
+	bool operator>=(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+		{
+			if (lhs.size() > rhs.size())
+				return (true);
+			else
+				return (false);
+		}
+		for (size_t i = 0; i < lhs.size(); i++)
+		{
+			if (lhs[i] > rhs[i])
+				return (true);
+			else if (lhs[i] < rhs[i])
+				return (false);
+		}
+		return (true);
+	}
+
+	template<class T, class Alloc>
+	void swap(ft::vector<T, Alloc>& lhs, ft::vector<T, Alloc>& rhs)
+	{
+		lhs.swap(rhs);
+	}
 }
+
 #endif
