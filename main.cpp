@@ -3,7 +3,11 @@
 #include <numeric>
 #include <string>
 #include <vector>
+#include <map>
+#include <utility>
+#include <functional>
 #include "includes/vector.hpp"
+#include "utils/pair.hpp"
 
 void	print_container(std::vector<int> &c)
 {
@@ -24,62 +28,77 @@ void	ft_print_container(ft::vector<int> &c)
 
 int main()
 {
-	{ // ==
-		std::cout << "=========== std ===========" << std::endl;
-		std::vector<int> vt;
-		vt.push_back(1);
-		vt.push_back(2);
-		vt.push_back(5);
-		vt.push_back(4);
-		vt.push_back(5);
-		vt.push_back(6);
-		vt.push_back(7);
-		vt.push_back(8);
-		vt.push_back(9);
-		vt.push_back(11);
-		std::vector<int> vt2;
-		vt2.push_back(1);
-		vt2.push_back(2);
-		vt2.push_back(3);
-		vt2.push_back(5);
-		vt2.push_back(5);
-		vt2.push_back(6);
-		vt2.push_back(7);
-		vt2.push_back(8);
-		vt2.push_back(9);
-		vt2.push_back(10);
-		// vt2.push_back(11);
-		bool result = vt <= vt2;
-		std::cout << result << std::endl;
+	{
+		std::map<int, int>::iterator it;
 	}
-	{ // ==
-		std::cout << "=========== ft ===========" << std::endl;
-		ft::vector<int> vt;
-		vt.push_back(1);
-		vt.push_back(2);
-		vt.push_back(3);
-		vt.push_back(4);
-		vt.push_back(5);
-		vt.push_back(6);
-		vt.push_back(7);
-		vt.push_back(8);
-		vt.push_back(9);
-		vt.push_back(10);
-		ft::vector<int> vt2;
-		vt2.push_back(1);
-		vt2.push_back(2);
-		vt2.push_back(3);
-		vt2.push_back(4);
-		vt2.push_back(5);
-		vt2.push_back(6);
-		vt2.push_back(7);
-		vt2.push_back(8);
-		vt2.push_back(9);
-		vt2.push_back(10);
-		// vt2.push_back(11);
-		bool result = vt != vt2;
-		std::cout << result << std::endl;
-	}
+	// { //pair
+	// 	int n = 1;
+    // 	int a[5] = {1, 2, 3, 4, 5};
+	// 	auto p = std::make_pair(n, a[1]);
+	// 	std::cout << p.first << " " << p.second << std::endl;
+	// }
+	// { //pair
+	// 	int n = 1;
+    // 	int a[5] = {1, 2, 3, 4, 5};
+	// 	auto p = ft::make_pair(n, a[1]);
+	// 	std::cout << p.first << " " << p.second << std::endl;
+	// }
+	// { // ==
+	// 	std::cout << "=========== std ===========" << std::endl;
+	// 	std::vector<int> vt;
+	// 	vt.push_back(1);
+	// 	vt.push_back(2);
+	// 	vt.push_back(5);
+	// 	vt.push_back(4);
+	// 	vt.push_back(5);
+	// 	vt.push_back(6);
+	// 	vt.push_back(7);
+	// 	vt.push_back(8);
+	// 	vt.push_back(9);
+	// 	vt.push_back(11);
+	// 	std::vector<int> vt2;
+	// 	vt2.push_back(1);
+	// 	vt2.push_back(2);
+	// 	vt2.push_back(3);
+	// 	vt2.push_back(5);
+	// 	vt2.push_back(5);
+	// 	vt2.push_back(6);
+	// 	vt2.push_back(7);
+	// 	vt2.push_back(8);
+	// 	vt2.push_back(9);
+	// 	vt2.push_back(10);
+	// 	// vt2.push_back(11);
+	// 	bool result = vt <= vt2;
+	// 	std::cout << result << std::endl;
+	// }
+	// { // ==
+	// 	std::cout << "=========== ft ===========" << std::endl;
+	// 	ft::vector<int> vt;
+	// 	vt.push_back(1);
+	// 	vt.push_back(2);
+	// 	vt.push_back(3);
+	// 	vt.push_back(4);
+	// 	vt.push_back(5);
+	// 	vt.push_back(6);
+	// 	vt.push_back(7);
+	// 	vt.push_back(8);
+	// 	vt.push_back(9);
+	// 	vt.push_back(10);
+	// 	ft::vector<int> vt2;
+	// 	vt2.push_back(1);
+	// 	vt2.push_back(2);
+	// 	vt2.push_back(3);
+	// 	vt2.push_back(4);
+	// 	vt2.push_back(5);
+	// 	vt2.push_back(6);
+	// 	vt2.push_back(7);
+	// 	vt2.push_back(8);
+	// 	vt2.push_back(9);
+	// 	vt2.push_back(10);
+	// 	// vt2.push_back(11);
+	// 	bool result = vt != vt2;
+	// 	std::cout << result << std::endl;
+	// }
 	// { //swap
 	// 	std::cout << "=========== std ===========" << std::endl;
 	// 	std::vector<int> vt;
