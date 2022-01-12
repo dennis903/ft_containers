@@ -1,0 +1,4 @@
+#ifndef BINARYSEARCHTREE_HPP
+# define BINARYSEARCHTREE_HPP
+
+#endif

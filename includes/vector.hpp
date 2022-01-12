@@ -3,9 +3,10 @@
 # include <memory>
 # include "./iterators/RandomAccessIter.hpp"
 # include "./iterators/ReverseIter.hpp"
+# include "../utils/iterator_traits.hpp"
 namespace ft
 {
-template<typename T, typename _Alloc = std::allocator<T> >
+template<typename T, typename _Alloc = std::allocator<T>, typename Category = ft::random_access_iterator_tag>
 class	vector
 {
 	public:
@@ -21,6 +22,7 @@ class	vector
 		typedef RandomAccessIter<const T, const T*, const T&>	const_iterator;
 		typedef ReverseIter<iterator>			reverse_iterator;
 		typedef ReverseIter<const iterator>		const_reverse_iterator;
+		typedef Category						iterator_category;
 
 	private:
 		pointer _arr;

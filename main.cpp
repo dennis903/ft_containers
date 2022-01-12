@@ -8,6 +8,7 @@
 #include <functional>
 #include "includes/vector.hpp"
 #include "utils/pair.hpp"
+#include "utils/iterator_traits.hpp"
 
 void	print_container(std::vector<int> &c)
 {
@@ -26,11 +27,28 @@ void	ft_print_container(ft::vector<int> &c)
 	std::cout << std::endl;
 }
 
+template< class it >
+void function(it i1, it i2)
+{
+    typename ft::iterator_traits<it>::iterator_category cat;
+    std::cout << typeid(cat).name() << std::endl;
+    while (i1 != i2)
+    {
+        typename ft::iterator_traits<it>::value_type x;
+        x = *i1;
+        std::cout << x << " ";
+        i1++;
+    };
+    std::cout << std::endl;
+}
+
 int main()
 {
-	{
-		std::map<int, int>::iterator it;
-	}
+    ft::vector<char> vc(10, 'a');
+    function(vc.begin(), vc.end());
+	// {
+	// 	std::map<int, int>::iterator it;
+	// }
 	// { //pair
 	// 	int n = 1;
     // 	int a[5] = {1, 2, 3, 4, 5};

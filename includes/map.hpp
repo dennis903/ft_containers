@@ -3,6 +3,7 @@
 # include <memory>
 # include "../utils/pair.hpp"
 # include "../utils/utils.hpp"
+# include "../utils/BinaryFunction.hpp"
 
 namespace ft
 {
@@ -21,6 +22,18 @@ class	map
 		typedef const value_type&				const_reference;
 		typedef value_type*						pointer;
 		typedef const value_type*				const_pointer;
+		class value_compare : ft::binary_function<value_type, value_type, bool>
+		{
+			protected:
+				Compare	comp;
+				value_compare( Compare c ) : comp(c) {}
+
+			public:
+				bool operator() (const value_type& lhs, const value_type& rhs) const
+				{
+					return (comp(lhs, rhs))
+				}
+		};
 		//iterator만들기
 };
 }

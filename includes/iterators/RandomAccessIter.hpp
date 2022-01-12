@@ -1,8 +1,10 @@
 #ifndef RANDOMACCESSITER_HPP
 # define RANDOMACCESSITER_HPP
+# include "../../utils/iterator_traits.hpp"
+
 namespace ft
 {
-template<typename T, typename Pointer = T*, typename Reference = T&>
+template<typename T, typename Pointer = T*, typename Reference = T&, typename Category = ft::random_access_iterator_tag>
 class	RandomAccessIter
 {
 	public:
@@ -12,7 +14,9 @@ class	RandomAccessIter
 		typedef RandomAccessIter<T, Pointer, Reference>	current;
 		typedef size_t							size_type;
 		typedef RandomAccessIter<T, T*, T&>		iterator;
+		typedef Category						iterator_category;
 		typedef RandomAccessIter<T, const T*, const T&> const_iterator;
+		typedef ptrdiff_t						difference_type;
 	private:
 		pointer	_arr;
 	public:
