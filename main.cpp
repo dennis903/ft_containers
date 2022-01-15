@@ -4,48 +4,96 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iterator>
 #include <utility>
 #include <functional>
+#include <random>
 #include "includes/vector.hpp"
 #include "utils/pair.hpp"
+#include "utils/lexicographical_compare.hpp"
 #include "utils/iterator_traits.hpp"
 
-void	print_container(std::vector<int> &c)
-{
-	for (size_t i = 0; i < c.size(); i++)
-	{
-		std::cout << c[i] << " ";
-	}
-	std::cout << std::endl;
-}
-void	ft_print_container(ft::vector<int> &c)
-{
-	for (size_t i = 0; i < c.size(); i++)
-	{
-		std::cout << c[i] << " ";
-	}
-	std::cout << std::endl;
-}
+// void	print_container(std::vector<int> &c)
+// {
+// 	for (size_t i = 0; i < c.size(); i++)
+// 	{
+// 		std::cout << c[i] << " ";
+// 	}
+// 	std::cout << std::endl;
+// }
+// void	ft_print_container(ft::vector<int> &c)
+// {
+// 	for (size_t i = 0; i < c.size(); i++)
+// 	{
+// 		std::cout << c[i] << " ";
+// 	}
+// 	std::cout << std::endl;
+// }
 
-template< class it >
-void function(it i1, it i2)
-{
-    typename ft::iterator_traits<it>::iterator_category cat;
-    std::cout << typeid(cat).name() << std::endl;
-    while (i1 != i2)
+// template< class it >
+// void function(it i1, it i2)
+// {
+//     typename ft::iterator_traits<it>::iterator_category cat;
+//     std::cout << typeid(cat).name() << std::endl;
+//     while (i1 != i2)
+//     {
+//         typename ft::iterator_traits<it>::value_type x;
+//         x = *i1;
+//         std::cout << x << " ";
+//         i1++;
+//     };
+//     std::cout << std::endl;
+// }
+
+struct trivial
     {
-        typename ft::iterator_traits<it>::value_type x;
-        x = *i1;
-        std::cout << x << " ";
-        i1++;
+    int val;
     };
-    std::cout << std::endl;
-}
 
 int main()
 {
-    ft::vector<char> vc(10, 'a');
-    function(vc.begin(), vc.end());
+	ft::vector<char> v1;
+	ft::vector<char> v2;
+
+	v1.push_back('d');
+	v1.push_back('e');
+	v1.push_back('f');
+	v1.push_back('g');
+	v2.push_back('b');
+	v2.push_back('a');
+	v2.push_back('d');
+	v2.push_back('c');
+
+	std::mt19937 g;
+	while (!ft::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()))
+	{
+		for (ft::vector<char>::iterator it = v1.begin(); it != v1.end(); it++)
+			std::cout << *it << " ";
+		std::cout << ">= ";
+		for (ft::vector<char>::iterator it = v2.begin(); it != v2.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+	}
+
+	//     std::cout << "is_integral<trivial> == " << std::boolalpha
+    //     << std::is_integral<trivial>::value << std::endl;
+    // std::cout << "is_integral<int> == " << std::boolalpha
+    //     << std::is_integral<int>::value << std::endl;
+    // std::cout << "is_integral<float> == " << std::boolalpha
+    //     << std::is_integral<float>::value << std::endl;
+	// ft::vector<int> v;
+	// v.push_back(1);
+	// v.push_back(2);
+	// v.push_back(3);
+	// v.push_back(4);
+	// v.push_back(5);
+
+	//  for (ft::vector<int>::iterator n = v.begin(); n != v.end(); n++) {
+    //     std::cout << *n << ' ';
+    // }
+    // std::cout << '\n';
+    // ft::vector<char> vc(10, 'a');
+    // function(vc.begin(), vc.end());
 	// {
 	// 	std::map<int, int>::iterator it;
 	// }
