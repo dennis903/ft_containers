@@ -12,6 +12,7 @@
 #include "utils/pair.hpp"
 #include "utils/lexicographical_compare.hpp"
 #include "utils/iterator_traits.hpp"
+#include "utils/bst_node.hpp"
 
 // void	print_container(std::vector<int> &c)
 // {
@@ -52,14 +53,13 @@ struct trivial
 
 int main()
 {
-	std::pair<int, int> foo;
-	std::pair<int, int> bar;
+	ft::bst_node<int> node(2);
 
-	foo = std::make_pair(10, 20);
-	bar = std::make_pair(10.5, 'A');
+	std::cout << node.value << std::endl;
+	std::cout << node.parent << std::endl;
+	std::cout << node.left << std::endl;
+	std::cout << node.right << std::endl;
 
-	std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
-	std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
 	// ft::vector<char> v1;
 	// ft::vector<char> v2;
 
