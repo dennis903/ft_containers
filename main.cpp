@@ -52,28 +52,36 @@ struct trivial
 
 int main()
 {
-	ft::vector<char> v1;
-	ft::vector<char> v2;
+	std::pair<int, int> foo;
+	std::pair<int, int> bar;
 
-	v1.push_back('d');
-	v1.push_back('e');
-	v1.push_back('f');
-	v1.push_back('g');
-	v2.push_back('b');
-	v2.push_back('a');
-	v2.push_back('d');
-	v2.push_back('c');
+	foo = std::make_pair(10, 20);
+	bar = std::make_pair(10.5, 'A');
 
-	std::mt19937 g;
-	while (!ft::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()))
-	{
-		for (ft::vector<char>::iterator it = v1.begin(); it != v1.end(); it++)
-			std::cout << *it << " ";
-		std::cout << ">= ";
-		for (ft::vector<char>::iterator it = v2.begin(); it != v2.end(); it++)
-			std::cout << *it << " ";
-		std::cout << std::endl;
-	}
+	std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
+	std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
+	// ft::vector<char> v1;
+	// ft::vector<char> v2;
+
+	// v1.push_back('d');
+	// v1.push_back('e');
+	// v1.push_back('f');
+	// v1.push_back('g');
+	// v2.push_back('b');
+	// v2.push_back('a');
+	// v2.push_back('d');
+	// v2.push_back('c');
+
+	// std::mt19937 g;
+	// while (!ft::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()))
+	// {
+	// 	for (ft::vector<char>::iterator it = v1.begin(); it != v1.end(); it++)
+	// 		std::cout << *it << " ";
+	// 	std::cout << ">= ";
+	// 	for (ft::vector<char>::iterator it = v2.begin(); it != v2.end(); it++)
+	// 		std::cout << *it << " ";
+	// 	std::cout << std::endl;
+	// }
 
 	//     std::cout << "is_integral<trivial> == " << std::boolalpha
     //     << std::is_integral<trivial>::value << std::endl;
