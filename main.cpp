@@ -11,6 +11,7 @@
 #include "includes/vector.hpp"
 #include "utils/pair.hpp"
 #include "utils/lexicographical_compare.hpp"
+#include "includes/iterators/BinarySearchTreeIter.hpp"
 #include "utils/iterator_traits.hpp"
 #include "utils/bst_node.hpp"
 
@@ -53,12 +54,25 @@ struct trivial
 
 int main()
 {
-	ft::bst_node<int> node(2);
+    // std::map<std::string, int>mapset;
+    // std::pair<std::string, int> p;
 
-	std::cout << node.value << std::endl;
-	std::cout << node.parent << std::endl;
-	std::cout << node.left << std::endl;
-	std::cout << node.right << std::endl;
+    // p = std::make_pair("alice", 1);
+    // mapset.insert(p);
+    // p = std::make_pair("tom", 2);
+    // mapset.insert(p);
+    // p = std::make_pair("dennis", 2);
+    // mapset.insert(p);
+    // p = std::make_pair("how", 2);
+    // mapset.insert(p);
+
+    // function(mapset.begin(), mapset.end());
+	// ft::bst_node<int> node(2);
+
+	// std::cout << node.value << std::endl;
+	// std::cout << node.parent << std::endl;
+	// std::cout << node.left << std::endl;
+	// std::cout << node.right << std::endl;
 
 	// ft::vector<char> v1;
 	// ft::vector<char> v2;

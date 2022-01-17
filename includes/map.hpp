@@ -3,7 +3,10 @@
 # include <memory>
 # include "../utils/pair.hpp"
 # include "../utils/less.hpp"
+# include "../utils/bst_node.hpp"
 # include "../utils/BinaryFunction.hpp"
+# include "iterators/BinarySearchTreeIter.hpp"
+# include "iterators/ReverseIter.hpp"
 
 namespace ft
 {
@@ -34,7 +37,21 @@ class	map
 					return (comp(lhs, rhs))
 				}
 		};
-		//iterator만들기
+		typedef BinarySearchTreeIter<value_type, value_type*, value_type&>	iterator;
+		typedef BinarySearchTreeIter<value_type, const value_type*, const value_type&>	const_iterator;
+		typedef ReverseIter<iterator>		reverse_iterator;
+		typedef ReverseIter<const iterator>	const_reverse_iterator;
+		//constructor
+
+		explicit map( const Compare& comp = Compare(), const Allocator& alloc = Allocator()) :
+			root(NULL),
+			comp(comp),
+			alloc(alloc)
+		{}
+	private:
+		bst_node<Key, T, Compare>				*root;
+		key_compare								comp;
+		allocator_type							alloc;
 };
 }
 #endif
