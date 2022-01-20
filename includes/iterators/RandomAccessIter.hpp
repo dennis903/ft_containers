@@ -22,7 +22,7 @@ class	RandomAccessIter
 	public:
 		RandomAccessIter() : _arr(NULL) {}
 		explicit RandomAccessIter(const pointer arr) : _arr(arr) {}
-		RandomAccessIter(const RandomAccessIter &_Iter) { *this = _Iter; }
+		RandomAccessIter(const RandomAccessIter &_Iter) : _arr(_Iter._arr) { *this = _Iter; }
 		~RandomAccessIter() {}
 		//대입 연산자(=)
 		current	&operator=(const RandomAccessIter &_Iter)
@@ -90,7 +90,6 @@ class	RandomAccessIter
 			current temp(*this);
 			temp._arr -= n;
 			return (temp);
-			return (*this);
 		}
 		current operator+=(size_type n)
 		{

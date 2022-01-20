@@ -4,6 +4,12 @@
 # include "./iterators/RandomAccessIter.hpp"
 # include "./iterators/ReverseIter.hpp"
 # include "../utils/iterator_traits.hpp"
+# include "../utils/enable_if.hpp"
+# include "../utils/is_integral.hpp"
+# include "../utils/distance.hpp"
+# include <exception>
+
+#include <iostream>
 namespace ft
 {
 template<typename T, typename _Alloc = std::allocator<T>, typename Category = ft::random_access_iterator_tag>
@@ -29,6 +35,14 @@ class	vector
 		size_type _size;
 		size_type _capacity;
 		_Alloc  _alloc;
+
+		class OutOfRangeException : public std::exception
+		{
+			virtual const char *what() const throw()
+			{
+				return "Index out of range";
+			}
+		};
 	public:
 		//constructor
 		explicit vector (const allocate_type& alloc = allocate_type())
@@ -49,12 +63,14 @@ class	vector
 			}
 		}
 		//begin이랑 end함수 만든 뒤에 해보는걸로
-		vector( iterator first, iterator last, const allocate_type& alloc = allocate_type())
+
+		template <class InputIterator>
+		vector( InputIterator first, InputIterator last, const allocate_type& alloc = allocate_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
 		: _arr(0), _size(0), _capacity(0), _alloc(alloc)
 		{
 			size_type iter_size = 0;
 
-			for (iterator iter = first; iter != last; iter++)
+			for (InputIterator iter = first; iter != last; iter++)
 				iter_size++;
 			this->_size = iter_size;
 			this->_capacity = iter_size;
@@ -110,23 +126,28 @@ class	vector
 				this->_arr[i] = value;
 		}
 
-		void assign(iterator first, iterator last)
+		template <class InputIterator>
+		void assign(InputIterator first, InputIterator last,
+			typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
 		{
-			size_type iter_size = 0;
-
+			difference_type gap = ft::distance(first, last);
 			if (_arr != nullptr)
 			{
 				_alloc.deallocate(this->_arr, this->_capacity);
 				_arr = nullptr;
 			}
-			for (iterator iter = first; iter != last; iter++)
-				iter_size++;
-			this->_size = iter_size;
-			this->_capacity = iter_size;
+			this->_size = gap;
+			this->_capacity = gap;
 			_alloc = allocate_type();
 			_arr = _alloc.allocate(_capacity);
+			// size_type iter_size = 0;
+			// for (iterator iter = first; iter != last; iter++)
+			// 	iter_size++;
 			for (size_type i = 0; i < _size; i++)
+			{
 				this->_arr[i] = value_type(*first);
+				*first++;
+			}
 		}
 
 		allocate_type get_allocator() const
@@ -136,12 +157,16 @@ class	vector
 		//element access
 		reference at( size_type pos )
 		{
-			return (this->_arr[pos]);
+			if (pos < this->_size)
+				return (this->_arr[pos]);
+			throw std::out_of_range("out of range");
 		}
 
 		const_reference at( size_type pos ) const
 		{
-			return (this->_arr[pos]);
+			if (pos < this->_size)
+				return (this->_arr[pos]);
+			throw std::out_of_range("out of range");
 		}
 
 		reference operator[](size_type pos)
@@ -192,7 +217,7 @@ class	vector
 
 		const_iterator begin() const
 		{
-			return (iterator(this->_arr));
+			return (const_iterator(this->_arr));
 		}
 
 		iterator end()
@@ -318,16 +343,14 @@ class	vector
 			return (iterator(&this->_arr[index]));
 		}
 
-		template< class InputIt >
-		void insert( iterator pos, InputIt first, InputIt last )
+		template< class InputIterator >
+		void insert( iterator pos, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
 		{
 			size_type back_count = 0;
-			size_type count = 0;
+			difference_type count = ft::distance(first, last);
 			size_type back;
 			size_type index = 0;
 
-			for (iterator it = first; it != last; it++)
-				count++;
 			for (iterator it = end(); it != pos; it--)
 				back_count++;
 			for (iterator it = begin(); it != pos; it++)

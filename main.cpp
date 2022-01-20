@@ -9,9 +9,9 @@
 #include <functional>
 #include <random>
 #include "includes/vector.hpp"
+#include <list>
 #include "utils/pair.hpp"
 #include "utils/lexicographical_compare.hpp"
-#include "includes/iterators/BinarySearchTreeIter.hpp"
 #include "utils/iterator_traits.hpp"
 #include "utils/bst_node.hpp"
 
@@ -52,8 +52,29 @@ struct trivial
     int val;
     };
 
+template <class T>
+void	printSize(ft::vector<T> vct)
+{
+	std::cout << "size : " << vct.size() << std::endl;
+	for (typename ft::vector<T>::iterator it = vct.begin(); it != vct.end(); it++)
+		std::cout << *it << std::endl;
+	std::cout << "====================================== \n\n";
+}
+
 int main()
 {
+
+	std::list<int> lst;
+	std::list<int>::iterator lst_it;
+	for (int i = 1; i < 5; ++i)
+		lst.push_back(i * 3);
+
+	ft::vector<int> vct(lst.begin(), lst.end());
+	printSize(vct);
+	vct.assign(lst.begin(), lst.end());
+	printSize(vct);
+	vct.insert(vct.end(), lst.rbegin(), lst.rend());
+	printSize(vct);
     // std::map<std::string, int>mapset;
     // std::pair<std::string, int> p;
 

@@ -45,6 +45,8 @@ class bst_node
 		}
 
 		~bst_node() {}
+		//node에 필요한 함수들 구현
+		
 };
 }
 #endif

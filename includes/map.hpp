@@ -45,13 +45,21 @@ class	map
 
 		explicit map( const Compare& comp = Compare(), const Allocator& alloc = Allocator()) :
 			root(NULL),
-			comp(comp),
-			alloc(alloc)
+			_comp(comp),
+			_alloc(alloc)
 		{}
+
+		template< class InputIt >
+		map( InputIt first, InputIt last, const Compare comp = Compare(), const Allocator& alloc = Allocator()) :
+			_comp(comp),
+			_alloc(alloc)
+		{
+			
+		}
 	private:
 		bst_node<Key, T, Compare>				*root;
-		key_compare								comp;
-		allocator_type							alloc;
+		key_compare								_comp;
+		allocator_type							_alloc;
 };
 }
 #endif
