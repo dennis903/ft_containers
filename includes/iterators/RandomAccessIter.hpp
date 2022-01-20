@@ -85,11 +85,11 @@ class	RandomAccessIter
 			temp._arr += n;
 			return (temp);
 		}
-		current operator-(size_type n)
+
+		template < class T1, class T2, class T3, class T4 >
+		difference_type	operator-(const RandomAccessIter<T1, T2, T3, T4> &other) const
 		{
-			current temp(*this);
-			temp._arr -= n;
-			return (temp);
+			return (this->_arr - other._arr);
 		}
 		current operator+=(size_type n)
 		{

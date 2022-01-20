@@ -25,7 +25,7 @@ class	vector
 		typedef value_type*						pointer;
 		typedef const value_type*				const_pointer;
 		typedef RandomAccessIter<T, T*, T&>		iterator;
-		typedef RandomAccessIter<const T, const T*, const T&>	const_iterator;
+		typedef RandomAccessIter<T, const T*, const T&>	const_iterator;
 		typedef ReverseIter<iterator>			reverse_iterator;
 		typedef ReverseIter<const iterator>		const_reverse_iterator;
 		typedef Category						iterator_category;
@@ -65,15 +65,13 @@ class	vector
 		//begin이랑 end함수 만든 뒤에 해보는걸로
 
 		template <class InputIterator>
-		vector( InputIterator first, InputIterator last, const allocate_type& alloc = allocate_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
+		vector( InputIterator first, InputIterator last, const allocate_type& alloc = allocate_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL) //deep copy
 		: _arr(0), _size(0), _capacity(0), _alloc(alloc)
 		{
-			size_type iter_size = 0;
+			difference_type		gap = ft::distance(first, last);
 
-			for (InputIterator iter = first; iter != last; iter++)
-				iter_size++;
-			this->_size = iter_size;
-			this->_capacity = iter_size;
+			this->_size = gap;
+			this->_capacity = gap;
 			_arr = _alloc.allocate(_capacity);
 			for (size_type i = 0; i < _size; i++)
 			{
@@ -89,7 +87,7 @@ class	vector
 			this->_capacity = other.capacity();
 			_arr = this->_alloc.allocate(this->_capacity);
 			for (size_type i = 0; i < other.size(); i++)
-				_arr[i] = other[i];
+				_arr[i] = other._arr[i];
 		}
 
 		//destructor
@@ -109,6 +107,9 @@ class	vector
 			this->_capacity = other._capacity;
 			this->_alloc = allocate_type();
 			this->_arr = _alloc.allocate(_capacity);
+			for (size_type i = 0; i < other.size(); i++)
+				_arr[i] = other._arr[i];
+			return (*this);
 		}
 		//Member function
 		void assign(size_type count, const T& value)
