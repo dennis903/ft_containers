@@ -22,14 +22,12 @@ class	RandomAccessIter
 	public:
 		RandomAccessIter() : _arr(NULL) {}
 		explicit RandomAccessIter(const pointer arr) : _arr(arr) {}
-		RandomAccessIter(const RandomAccessIter &_Iter) : _arr(_Iter._arr) { *this = _Iter; }
+		RandomAccessIter(const iterator &_Iter) : _arr(_Iter.get_arr()) { *this = _Iter; }
 		~RandomAccessIter() {}
 		//대입 연산자(=)
-		current	&operator=(const RandomAccessIter &_Iter)
+		current	&operator=(const RandomAccessIter<T, T*, T&> &_Iter)
 		{
-			if (this == &_Iter)
-				return (*this);
-			this->_arr = _Iter._arr;
+			this->_arr = _Iter.get_arr();
 			return (*this);
 		}
 		//증가 연산자(후위, 전위, *a++)
@@ -78,7 +76,7 @@ class	RandomAccessIter
 			return (this->_arr);
 		}
 		//+, - += -=
-		current operator+(size_type n)
+		current operator+(size_type n) const
 		{
 			//iterator의 주소를 찍었을 때 다른 주소를 가짐.
 			current temp(*this);
@@ -86,7 +84,7 @@ class	RandomAccessIter
 			return (temp);
 		}
 
-		current operator-(size_type n)
+		current operator-(size_type n) const
 		{
 			current temp(*this);
 			temp._arr -= n;
@@ -96,48 +94,66 @@ class	RandomAccessIter
 		template < class T1, class T2, class T3, class T4 >
 		difference_type	operator-(const RandomAccessIter<T1, T2, T3, T4> &other) const
 		{
-			return (this->_arr - other._arr);
+			return (this->_arr - other.get_arr());
 		}
+
 		current operator+=(size_type n)
 		{
 			this->_arr += n;
-			return (this);
+			return (*this);
 		}
 		current operator-=(size_type n)
 		{
 			this->_arr -= n;
-			return (this);
+			return (*this);
 		}
 
-		bool operator==(const current &temp) const
+		template< class T1, class T2, class T3, class T4 >
+		bool operator==(const RandomAccessIter<T1, T2, T3, T4> &temp) const
 		{
-			return (this->_arr == temp._arr);
+			return (this->_arr == temp.get_arr());
 		}
 
-		bool operator!=(const current &temp) const
+		template< class T1, class T2, class T3, class T4 >
+		bool operator!=(const RandomAccessIter<T1, T2, T3, T4> &temp) const
 		{
-			return (this->_arr != temp._arr);
+			return (this->_arr != temp.get_arr());
 		}
 
-		bool operator>(const current &temp) const
+		template< class T1, class T2, class T3, class T4 >
+		bool operator>(const RandomAccessIter<T1, T2, T3, T4> &temp) const
 		{
-			return (this->_arr > temp._arr);
+			return (this->_arr > temp.get_arr());
 		}
 
-		bool operator<(const current &temp) const
+		template< class T1, class T2, class T3, class T4 >
+		bool operator<(const RandomAccessIter<T1, T2, T3, T4> &temp) const
 		{
-			return (this->_arr < temp._arr);
+			return (this->_arr < temp.get_arr());
 		}
 
-		bool operator<=(const current &temp) const
+		template< class T1, class T2, class T3, class T4 >
+		bool operator<=(const RandomAccessIter<T1, T2, T3, T4> &temp) const
 		{
-			return (this->_arr <= temp._arr);
+			return (this->_arr <= temp.get_arr());
 		}
 
-		bool operator>=(const current &temp) const
+		template< class T1, class T2, class T3, class T4 >
+		bool operator>=(const RandomAccessIter<T1, T2, T3, T4> &temp) const
 		{
-			return (this->_arr >= temp._arr);
+			return (this->_arr >= temp.get_arr());
 		}
+
+		pointer		get_arr() const
+		{
+			return (this->_arr);
+		}
+};
+
+template < class T1, class T2, class T3, class T4 >
+RandomAccessIter<T1, T2, T3, T4> operator+(typename RandomAccessIter<T1, T2, T3, T4>::size_type n, const RandomAccessIter<T1, T2, T3, T4>& _Iter)
+{
+	return (_Iter + n);
 };
 }
 #endif

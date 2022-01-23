@@ -374,17 +374,18 @@ class	vector
 
 		iterator erase(iterator first, iterator last)
 		{
-			size_type count = 0;
-			size_type index = 0;
+			iterator	temp = first;
+			size_type	count = 0;
+			size_type	index = 0;
 
 			for (iterator it = begin(); it != first; it++)
 				index++;
-			while (first != last)
+			while (temp != last)
 			{
 				this->_alloc.destroy(&this->_arr[index]);
 				index++;
 				count++;
-				first++;
+				temp++;
 			}
 			for (size_type i = index; i < size(); i++)
 				this->_arr[i - count] = this->_arr[i];
@@ -443,7 +444,7 @@ class	vector
 	{
 		if (lhs.size() != rhs.size())
 		{
-			if (lhs.size() > rhs.size())
+			if (lhs.size() >= rhs.size())
 				return (false);
 			else
 				return (true);
