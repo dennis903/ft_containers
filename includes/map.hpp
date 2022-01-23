@@ -5,8 +5,8 @@
 # include "../utils/less.hpp"
 # include "../utils/bst_node.hpp"
 # include "../utils/BinaryFunction.hpp"
-# include "iterators/BinarySearchTreeIter.hpp"
-# include "iterators/ReverseIter.hpp"
+// # include "iterators/BinarySearchTreeIter.hpp"
+# include "iterators/reverse_iterator.hpp"
 
 namespace ft
 {
@@ -39,8 +39,8 @@ class	map
 		};
 		typedef BinarySearchTreeIter<value_type, value_type*, value_type&>	iterator;
 		typedef BinarySearchTreeIter<value_type, const value_type*, const value_type&>	const_iterator;
-		typedef ReverseIter<iterator>		reverse_iterator;
-		typedef ReverseIter<const iterator>	const_reverse_iterator;
+		typedef reverse_iterator<iterator>		reverse_iterator;
+		typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 		//constructor
 
 		explicit map( const Compare& comp = Compare(), const Allocator& alloc = Allocator()) :

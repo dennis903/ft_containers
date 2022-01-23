@@ -1,8 +1,9 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 # include <memory>
-# include "./iterators/RandomAccessIter.hpp"
-# include "./iterators/ReverseIter.hpp"
+# include "./iterators/random_access_iterator.hpp"
+# include "./iterators/reverse_iterator.hpp"
+# include "../utils/lexicographical_compare.hpp"
 # include "../utils/iterator_traits.hpp"
 # include "../utils/enable_if.hpp"
 # include "../utils/is_integral.hpp"
@@ -24,11 +25,11 @@ class	vector
 		typedef const value_type&				const_reference;
 		typedef value_type*						pointer;
 		typedef const value_type*				const_pointer;
-		typedef RandomAccessIter<T, T*, T&>		iterator;
-		typedef RandomAccessIter<T, const T*, const T&>	const_iterator;
-		typedef ReverseIter<iterator>			reverse_iterator;
-		typedef ReverseIter<const iterator>		const_reverse_iterator;
-		typedef Category						iterator_category;
+		typedef random_access_iterator<T, T*, T&>		iterator;
+		typedef random_access_iterator<T, const T*, const T&>	const_iterator;
+		typedef reverse_iterator<const_iterator>		const_reverse_iterator;
+		typedef reverse_iterator<iterator>				reverse_iterator; //cost_reverse_iterator과 reverse_iterator랑 순서 바꾸면 컴파일이 안됌.
+		typedef Category								iterator_category;
 
 	private:
 		pointer _arr;
@@ -233,21 +234,21 @@ class	vector
 
 		reverse_iterator rbegin()
 		{
-			return (reverse_iterator(this->_arr + this->_size - 1));
+			return (reverse_iterator(this->end()));
 		}
 		const_reverse_iterator rbegin() const
 		{
-			return (const_reverse_iterator(this->_arr + this->_size - 1));
+			return (const_reverse_iterator(this->end()));
 		}
 
 		reverse_iterator rend()
 		{
-			return (reverse_iterator(this->_arr - 1));
+			return (reverse_iterator(this->begin()));
 		}
 
 		const_reverse_iterator rend() const
 		{
-			return (const_reverse_iterator(this->_arr - 1));
+			return (const_reverse_iterator(this->begin()));
 		}
 
 		//capacity
@@ -442,81 +443,25 @@ class	vector
 	template<class T, class Alloc>
 	bool operator<(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
 	{
-		if (lhs.size() != rhs.size())
-		{
-			if (lhs.size() >= rhs.size())
-				return (false);
-			else
-				return (true);
-		}
-		for (size_t i = 0; i < lhs.size(); i++)
-		{
-			if (lhs[i] > rhs[i])
-				return (false);
-			else if (lhs[i] < rhs[i])
-				return (true);
-		}
-		return (false);
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 
 	template<class T, class Alloc>
 	bool operator<=(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
 	{
-		if (lhs.size() != rhs.size())
-		{
-			if (lhs.size() > rhs.size())
-				return (false);
-			else
-				return (true);
-		}
-		for (size_t i = 0; i < lhs.size(); i++)
-		{
-			if (lhs[i] > rhs[i])
-				return (false);
-			else if (lhs[i] < rhs[i])
-				return (true);
-		}
-		return (true);
+		return (!(rhs < lhs));
 	}
 
 	template<class T, class Alloc>
 	bool operator>(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
 	{
-		if (lhs.size() != rhs.size())
-		{
-			if (lhs.size() > rhs.size())
-				return (true);
-			else
-				return (false);
-		}
-		for (size_t i = 0; i < lhs.size(); i++)
-		{
-			if (lhs[i] > rhs[i])
-				return (true);
-			else if (lhs[i] < rhs[i])
-				return (false);
-		}
-		return (false);
+		return (rhs < lhs);
 	}
 
 	template<class T, class Alloc>
 	bool operator>=(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
 	{
-		if (lhs.size() != rhs.size())
-		{
-			if (lhs.size() > rhs.size())
-				return (true);
-			else
-				return (false);
-		}
-		for (size_t i = 0; i < lhs.size(); i++)
-		{
-			if (lhs[i] > rhs[i])
-				return (true);
-			else if (lhs[i] < rhs[i])
-				return (false);
-		}
-		return (true);
+		return (rhs <= lhs );
 	}
 
 	template<class T, class Alloc>

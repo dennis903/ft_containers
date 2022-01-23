@@ -1,31 +1,31 @@
-#ifndef RANDOMACCESSITER_HPP
-# define RANDOMACCESSITER_HPP
+#ifndef RANDOM_ACCESS_ITERATOR_HPP
+# define RANDOM_ACCESS_ITERATOR_HPP
 # include "../../utils/iterator_traits.hpp"
 
 namespace ft
 {
 template<typename T, typename Pointer = T*, typename Reference = T&, typename Category = ft::random_access_iterator_tag>
-class	RandomAccessIter
+class	random_access_iterator
 {
 	public:
 		typedef T								value_type;
 		typedef Pointer							pointer;
 		typedef Reference						reference;
-		typedef RandomAccessIter<T, Pointer, Reference>	current;
+		typedef random_access_iterator<T, Pointer, Reference>	current;
 		typedef size_t							size_type;
-		typedef RandomAccessIter<T, T*, T&>		iterator;
+		typedef random_access_iterator<T, T*, T&>		iterator;
 		typedef Category						iterator_category;
-		typedef RandomAccessIter<T, const T*, const T&> const_iterator;
+		typedef random_access_iterator<T, const T*, const T&> const_iterator;
 		typedef ptrdiff_t						difference_type;
 	private:
 		pointer	_arr;
 	public:
-		RandomAccessIter() : _arr(NULL) {}
-		explicit RandomAccessIter(const pointer arr) : _arr(arr) {}
-		RandomAccessIter(const iterator &_Iter) : _arr(_Iter.get_arr()) { *this = _Iter; }
-		~RandomAccessIter() {}
+		random_access_iterator() : _arr(NULL) {}
+		explicit random_access_iterator(const pointer arr) : _arr(arr) {}
+		random_access_iterator(const iterator &_Iter) : _arr(_Iter.get_arr()) { *this = _Iter; }
+		~random_access_iterator() {}
 		//대입 연산자(=)
-		current	&operator=(const RandomAccessIter<T, T*, T&> &_Iter)
+		current	&operator=(const random_access_iterator<T, T*, T&> &_Iter)
 		{
 			this->_arr = _Iter.get_arr();
 			return (*this);
@@ -92,7 +92,7 @@ class	RandomAccessIter
 		}
 
 		template < class T1, class T2, class T3, class T4 >
-		difference_type	operator-(const RandomAccessIter<T1, T2, T3, T4> &other) const
+		difference_type	operator-(const random_access_iterator<T1, T2, T3, T4> &other) const
 		{
 			return (this->_arr - other.get_arr());
 		}
@@ -109,37 +109,37 @@ class	RandomAccessIter
 		}
 
 		template< class T1, class T2, class T3, class T4 >
-		bool operator==(const RandomAccessIter<T1, T2, T3, T4> &temp) const
+		bool operator==(const random_access_iterator<T1, T2, T3, T4> &temp) const
 		{
 			return (this->_arr == temp.get_arr());
 		}
 
 		template< class T1, class T2, class T3, class T4 >
-		bool operator!=(const RandomAccessIter<T1, T2, T3, T4> &temp) const
+		bool operator!=(const random_access_iterator<T1, T2, T3, T4> &temp) const
 		{
 			return (this->_arr != temp.get_arr());
 		}
 
 		template< class T1, class T2, class T3, class T4 >
-		bool operator>(const RandomAccessIter<T1, T2, T3, T4> &temp) const
+		bool operator>(const random_access_iterator<T1, T2, T3, T4> &temp) const
 		{
 			return (this->_arr > temp.get_arr());
 		}
 
 		template< class T1, class T2, class T3, class T4 >
-		bool operator<(const RandomAccessIter<T1, T2, T3, T4> &temp) const
+		bool operator<(const random_access_iterator<T1, T2, T3, T4> &temp) const
 		{
 			return (this->_arr < temp.get_arr());
 		}
 
 		template< class T1, class T2, class T3, class T4 >
-		bool operator<=(const RandomAccessIter<T1, T2, T3, T4> &temp) const
+		bool operator<=(const random_access_iterator<T1, T2, T3, T4> &temp) const
 		{
 			return (this->_arr <= temp.get_arr());
 		}
 
 		template< class T1, class T2, class T3, class T4 >
-		bool operator>=(const RandomAccessIter<T1, T2, T3, T4> &temp) const
+		bool operator>=(const random_access_iterator<T1, T2, T3, T4> &temp) const
 		{
 			return (this->_arr >= temp.get_arr());
 		}
@@ -151,7 +151,7 @@ class	RandomAccessIter
 };
 
 template < class T1, class T2, class T3, class T4 >
-RandomAccessIter<T1, T2, T3, T4> operator+(typename RandomAccessIter<T1, T2, T3, T4>::size_type n, const RandomAccessIter<T1, T2, T3, T4>& _Iter)
+random_access_iterator<T1, T2, T3, T4> operator+(typename random_access_iterator<T1, T2, T3, T4>::size_type n, const random_access_iterator<T1, T2, T3, T4>& _Iter)
 {
 	return (_Iter + n);
 };
