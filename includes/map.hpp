@@ -5,7 +5,7 @@
 # include "../utils/less.hpp"
 # include "../utils/bst_node.hpp"
 # include "../utils/BinaryFunction.hpp"
-// # include "iterators/BinarySearchTreeIter.hpp"
+# include "iterators/binary_search_tree_iterator.hpp"
 # include "iterators/reverse_iterator.hpp"
 
 namespace ft
@@ -17,11 +17,11 @@ class	map
 		typedef Key								key_type;
 		typedef T								mapped_type;
 		typedef ft::pair<const Key, T>			value_type;
-		typedef size_t							size_type;
-		typedef ptrdiff_t						difference_type;
 		typedef Compare							key_compare;
 		typedef Allocator						allocator_type;
 		typedef value_type&						reference;
+		typedef size_t							size_type;
+		typedef ptrdiff_t						difference_type;
 		typedef const value_type&				const_reference;
 		typedef value_type*						pointer;
 		typedef const value_type*				const_pointer;
@@ -37,29 +37,24 @@ class	map
 					return (comp(lhs, rhs))
 				}
 		};
-		typedef BinarySearchTreeIter<value_type, value_type*, value_type&>	iterator;
-		typedef BinarySearchTreeIter<value_type, const value_type*, const value_type&>	const_iterator;
-		typedef reverse_iterator<iterator>		reverse_iterator;
+		typedef binary_search_tree_iterator<value_type, value_type*, value_type&>	iterator;
+		typedef binary_search_tree_iterator<value_type, const value_type*, const value_type&>	const_iterator;
+		typedef reverse_iterator<iterator>			reverse_iterator;
 		typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 		//constructor
 
-		explicit map( const Compare& comp = Compare(), const Allocator& alloc = Allocator()) :
-			root(NULL),
-			_comp(comp),
-			_alloc(alloc)
-		{}
-
-		template< class InputIt >
-		map( InputIt first, InputIt last, const Compare comp = Compare(), const Allocator& alloc = Allocator()) :
-			_comp(comp),
-			_alloc(alloc)
-		{
-			
-		}
 	private:
 		bst_node<Key, T, Compare>				*root;
 		key_compare								_comp;
 		allocator_type							_alloc;
+	public:
+		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
+			: root(), _comp(comp), _alloc(alloc)
+		{}
+
+		template <class InputIterator>
+		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
+			: 
 };
 }
 #endif

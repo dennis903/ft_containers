@@ -1,52 +1,80 @@
 #ifndef BST_NODE_HPP
 # define BST_NODE_HPP
-# include "less.hpp"
-# include "pair.hpp"
+# include <memory>
 namespace ft
 {
-template< class T1, class T2, class Compare = ft::less<T1> >
+template < class T, class Allocate = std::allocator<T> >
 class bst_node
 {
+	public:
+		typedef T			value_type;
+		typedef Allocate	allocate_type;
 	private:
-		bst_node* parent;
-		bst_node* left;
-		bst_node* right;
+		value_type		*_value;
+		allocate_type	_alloc;
+		bst_node		*_parent;
+		bst_node		*_left;
+		bst_node		*_right;
 
 	public:
-		pair<T1, T2> current;
-
-		bst_node() :
-			parent(NULL),
-			left(NULL),
-			right(NULL)
+		bst_node() : _value(NULL), _parent(NULL), _left(NULL), _right(NULL), _alloc(allocate_type())
 		{}
 
-		bst_node(T1 first, T2 second = T2()) :
-			parent(NULL),
-			left(NULL),
-			right(NULL),
-			current(first, second)
-		{}
-
-		bst_node(const pair<T1, T2> &pair) :
-			parent(NULL),
-			left(NULL),
-			right(NULL),
-			current(pair)
-		{}
-
-		bst_node(const bst_node &other, const bst_node other_parent = NULL) :
-			parent(other_parent)
+		bst_node(const value_type &value) : _parent(NULL), _left(NULL), _right(NULL), _alloc(allocate_type())
 		{
-			if (other.left != NULL)
-				this->left = new bst_node<T1, T2, Compare>(*other.left, NULL);
-			if (other.right != NULL)
-				this->right = new bst_node<T1, T2, Compare>(*other.right, NULL);
+			if (value != NULL)
+			{
+				this->_value = _alloc.allocate(1);
+				_alloc.construct(this->_value, value);
+			}
 		}
 
-		~bst_node() {}
-		//node에 필요한 함수들 구현
-		
+		bst_node(const bst_node *other) : _parent(NULL), _left(NULL), _right(NULL), _alloc(allocate_type())
+		{
+			if (other != NULL)
+			{
+				this->_value = _alloc.allocate(1);
+				_alloc.construct(this->_value, other.get_value());
+			}
+		}
+
+		~bst_node()
+		{
+			if (this->_value != NULL)
+			{
+				this->_alloc.destroy(this->_value);
+				this->_alloc.deallocate(this->_value, 1);
+			}
+		}
+
+		value_type	&get_value() const
+		{
+			return (this->_value);
+		}
+
+		bool	is_root() const
+		{
+			if (this->_parent == NULL)
+				return (true);
+			else
+				return (false);
+		}
+
+		bool	is_left() const
+		{
+			if (this->_parent->_left == this)
+				return (true);
+			else
+				return (false);
+		}
+
+		bool	is_right() const
+		{
+			if (this->_parent->_right == this)
+				return (true);
+			else
+				return (false);
+		}
 };
 }
 #endif
