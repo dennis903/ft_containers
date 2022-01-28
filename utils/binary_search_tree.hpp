@@ -55,8 +55,29 @@ class binary_search_tree
 		void		copy(const binary_search_tree &other)
 		{
 			this->delete_all();
-			
+			copy(other._root);
 		}
+
+		void		copy(const node_type *node)
+		{
+			if (copy(node->_value) == false)
+				return ;
+			copy(node->_left);
+			copy(node->_right);
+		}
+
+		bool		copy(const value_type *value)
+		{
+			if (value == NULL)
+				return (false);
+			else
+			{
+				insert(*value);
+				return (true);
+			}
+		}
+
+		void		insert()
 
 		void		delete_all()
 		{
