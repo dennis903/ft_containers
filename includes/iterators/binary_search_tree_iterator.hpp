@@ -5,7 +5,7 @@
 namespace ft
 {
 template<typename T, typename Pointer = T*, typename Reference = T&, typename Category = ft::bidirectional_iterator_tag>
-class bst_iterator
+class binary_search_tree_iterator
 {
 	public:
 		typedef T													value_type;
@@ -16,24 +16,24 @@ class bst_iterator
 		typedef size_t												size_type;
 		typedef Category											iterator_category;
 		typedef ptrdiff_t											difference_type;
-		typedef bst_iterator<T, T*, T&>				iterator;
-		typedef bst_iterator<T, const T*, const T&>	const_iterator;
+		typedef binary_search_tree_iterator<T, T*, T&>				iterator;
+		typedef binary_search_tree_iterator<T, const T*, const T&>	const_iterator;
 	private:
 		node_ptr	ptr;
 	public:
-		bst_iterator() :
+		binary_search_tree_iterator() :
 			ptr()
 		{}
 
-		bst_iterator(const node_ptr &other) :
+		binary_search_tree_iterator(const node_ptr &other) :
 			ptr(x)
 		{}
 
-		bst_iterator(const iterator &other) :
+		binary_search_tree_iterator(const iterator &other) :
 			ptr(other.ptr)
 		{}
 
-		~bst_iterator() {}
+		~binary_search_tree_iterator() {}
 
 		reference operator*() const
 		{
@@ -72,13 +72,13 @@ class bst_iterator
 		}
 
 		template<class T2, class A, class B, class C>
-		bool operator==(const bst_iterator<T2, A, B, C>& x)
+		bool operator==(const binary_search_tree_iterator<T2, A, B, C>& x)
 		{
 			return (this->ptr == x.ptr);
 		}
 
 		template<class T2, class A, class B, class C>
-		bool operator!=(const bst_iterator<T2, A, B, C>& x)
+		bool operator!=(const binary_search_tree_iterator<T2, A, B, C>& x)
 		{
 			return (this->ptr != x.ptr);
 		}

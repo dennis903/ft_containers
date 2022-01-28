@@ -4,7 +4,7 @@
 # include "../utils/pair.hpp"
 # include "../utils/less.hpp"
 # include "../utils/bst_node.hpp"
-# include "../utils/BinaryFunction.hpp"
+# include "../utils/binary_function.hpp"
 # include "iterators/binary_search_tree_iterator.hpp"
 # include "iterators/reverse_iterator.hpp"
 

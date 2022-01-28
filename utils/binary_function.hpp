@@ -1,5 +1,5 @@
-#ifndef BINARYFUNCTION_HPP
-# define BINARYFUNCTION_HPP
+#ifndef BINARY_FUNCTION_HPP
+# define BINARY_FUNCTION_HPP
 namespace ft
 {
 template<class Arg1, class Arg2, class Result>
