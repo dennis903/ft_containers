@@ -12,12 +12,13 @@ template< class T, class Compare = ft::less<T>, class NodeType = ft::bst_node<T>
 class binary_search_tree
 {
 	public:
-		typedef T					value_type;
-		typedef Compare				value_compare;
-		typedef NodeType			node_type;
-		typedef NodeAlloc			node_alloc_type;
-		typedef size_t				size_type;
-
+		typedef T														value_type;
+		typedef Compare													value_compare;
+		typedef NodeType												node_type;
+		typedef NodeAlloc												node_alloc_type;
+		typedef size_t													size_type;
+		typedef ft::binary_search_tree_iterator<T, T*, T&>				iterator;
+		typedef ft::binary_search_tree_iterator<T, const T*, const T&>	const_iterator;
 	private:
 		node_type*					_root;
 		node_type*					_none;
@@ -52,13 +53,13 @@ class binary_search_tree
 			delete_all();
 		}
 
-		void		copy(const binary_search_tree &other)
+		void					copy(const binary_search_tree &other)
 		{
 			this->delete_all();
 			copy(other._root);
 		}
 
-		void		copy(const node_type *node)
+		void					copy(const node_type *node)
 		{
 			if (copy(node->_value) == false)
 				return ;
@@ -66,26 +67,53 @@ class binary_search_tree
 			copy(node->_right);
 		}
 
-		bool		copy(const value_type *value)
+		bool					copy(const value_type *value)
 		{
 			if (value == NULL)
 				return (false);
 			else
 			{
-				insert(*value);
+				insert_pair(*value);
 				return (true);
 			}
 		}
 
-		void		insert()
+		pair<node_type*, bool>	insert_pair(const value_type &value)
+		{
+			node_type	*node;
+			node_type	*parent;
+			node_type	*cur;
 
-		void		delete_all()
+			node = construct_node(value);
+			if (this->is_empty())
+			{
+				this->_root = node;
+				this->_root->_parent = this->_none;
+				this->_root->_left = this->_none;
+				this->_root->_right = this->_none;
+				return (pair<node_type*, bool>(this->_root, true));
+			}
+			cur = this->_root;
+			parent = this->_none;
+			while (cur != this->_none)
+			{
+				parent = cur;
+				if (check_same_value(cur, node->_value))
+				{
+					delete_node(node);
+					return (pair<node_type *, bool>(this->_cur, false));
+				}
+				else if ()
+			}
+		}
+
+		void					delete_all()
 		{
 			delete_all(this->_root);
 			delete_node(this->_none);
 		}
 
-		void		delete_all(node_type *node)
+		void					delete_all(node_type *node)
 		{
 			if (node == this->_none)
 				return ;
@@ -103,7 +131,7 @@ class binary_search_tree
 			delete_node(node);
 		}
 
-		void		delete_root()
+		void					delete_root()
 		{
 			node_type *tmpNode;
 
@@ -132,17 +160,32 @@ class binary_search_tree
 			}
 		}
 
-		node_type	*find_minimum(node_type *node)
+		node_type				*find_minimum(node_type *node)
 		{
 			while (node->_left != this->_none)
 				node = node->_left;
 			return (node);
 		}
 
-		void		delete_node(node_type *node)
+		void					delete_node(node_type *node)
 		{
 			this->_node_alloc.destroy(node);
 			this->_node_alloc.deallocate(node, 1);
+		}
+
+		node_type				*construct_node(const value_type &value)
+		{
+			node_type			*node;
+
+			node = _node_alloc.allocate(1);
+			this->_node_alloc.construct(node, node_alloc_type(value));
+			return (node);
+		}
+
+	private:
+		bool					check_same_value(node_type *node, const value_type &value)
+		{
+			return (!ft::less<value_type>(node->_value, value) && !ft::less<value_type>(value, node->_value))
 		}
 };
 }
