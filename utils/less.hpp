@@ -1,5 +1,6 @@
 #ifndef LESS_HPP
 # define LESS_HPP
+
 namespace ft
 {
 template <class T>

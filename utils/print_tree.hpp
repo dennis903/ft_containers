@@ -54,10 +54,10 @@ namespace ft
 		}
 
 		showTrunks(trunk);
-		if (root->color == RED)
-			std::cout <<"\033[0;31m" << "[" << root->value->first << "]" << std::endl;
-		if (root->color == BLACK)
-			std::cout <<"\033[0;34m" << "[" << root->value->first << "]" << std::endl;
+		// if (root->color == RED)
+		// 	std::cout <<"\033[0;31m" << "[" << root->value->first << "]" << std::endl;
+		// if (root->color == BLACK)
+		std::cout <<"\033[0;34m" << "[" << root->value->first << "]" << std::endl;
 		std::cout << "\033[0;37m";
 		if (prev) {
 			prev->str = prev_str;

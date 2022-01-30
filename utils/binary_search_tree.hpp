@@ -27,7 +27,7 @@ class binary_search_tree
 		size_type					_size;
 
 	public:
-		binary_search_tree() : _comp(value_compare()), _size(0), _node_alloc(node_alloc_type())
+		binary_search_tree() : _comp(value_compare()), _node_alloc(node_alloc_type()), _size(0)
 		{
 			this->_none = _node_alloc.allocate(1);
 			this->_node_alloc.construct(this->_none, node_alloc_type());
@@ -37,7 +37,7 @@ class binary_search_tree
 			this->_root = this->_none;
 		}
 
-		binary_search_tree(const binary_search_tree &other) : _comp(value_compare()), _size(0), _node_alloc(node_alloc_type())
+		binary_search_tree(const binary_search_tree< T > &other) : _comp(value_compare()), _node_alloc(node_alloc_type()), _size(0)
 		{
 			this->_none = _node_alloc.allocate(1);
 			this->_node_alloc.construct(this->_none, node_alloc_type());
@@ -51,6 +51,11 @@ class binary_search_tree
 		~binary_search_tree()
 		{
 			delete_all();
+		}
+
+		node_type*				get_root() const
+		{
+			return (this->_root);
 		}
 
 		void					copy(const binary_search_tree &other)
@@ -78,6 +83,14 @@ class binary_search_tree
 			}
 		}
 
+		bool					is_empty()
+		{
+			if (this->_root->_value == NULL)
+				return (true);
+			else
+				return (false);
+		}
+
 		pair<node_type*, bool>	insert_pair(const value_type &value)
 		{
 			node_type	*node;
@@ -101,10 +114,23 @@ class binary_search_tree
 				if (check_same_value(cur, node->_value))
 				{
 					delete_node(node);
-					return (pair<node_type *, bool>(this->_cur, false));
+					return (pair<node_type *, bool>(cur, false));
 				}
-				else if ()
+				else if (_comp(value, cur->_value))
+					cur = cur->_left;
+				else if (_comp(cur->_value, value))
+					cur = cur->_right;
 			}
+			// 루프가 끝나면 null노드에 도착한다.
+			cur = node;
+			cur->_left = this->_none;
+			cur->_right = this->_none;
+			if (_comp(parent->_value, cur->_value))
+				parent->_right = cur;
+			else
+				parent->_left = cur;
+			cur->_parent = parent;
+			return (pair<node_type *, bool>(cur, true));
 		}
 
 		void					delete_all()
@@ -127,7 +153,7 @@ class binary_search_tree
 			else if (node->is_left())
 				node->_parent->_left = this->_none;
 			else
-				node->_parent-_right = this->_none;
+				node->_parent->_right = this->_none;
 			delete_node(node);
 		}
 
@@ -183,9 +209,9 @@ class binary_search_tree
 		}
 
 	private:
-		bool					check_same_value(node_type *node, const value_type &value)
+		bool					check_same_value(node_type *node, const value_type *value)
 		{
-			return (!ft::less<value_type>(node->_value, value) && !ft::less<value_type>(value, node->_value))
+			return (!_comp(node->_value, value) && !_comp(value, node->_value));
 		}
 };
 }

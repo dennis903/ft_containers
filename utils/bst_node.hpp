@@ -28,12 +28,12 @@ class bst_node
 			}
 		}
 
-		bst_node(const bst_node *other) : _parent(NULL), _left(NULL), _right(NULL), _alloc(allocate_type())
+		bst_node(const bst_node<T> *other) : _parent(NULL), _left(NULL), _right(NULL), _alloc(allocate_type())
 		{
 			if (other != NULL)
 			{
 				this->_value = _alloc.allocate(1);
-				_alloc.construct(this->_value, other.get_value());
+				_alloc.construct(this->_value, other->_value);
 			}
 		}
 
@@ -46,17 +46,12 @@ class bst_node
 			}
 		}
 
-		bst_node &operator=(const bst_node &other)
+		bst_node &operator=(const bst_node<T> &other)
 		{
 			this->_value = other._value;
 			this->_parent = other._parent;
 			this->_left = other._left;
 			this->_right = other._right;
-		}
-
-		value_type	&get_value() const
-		{
-			return (this->_value);
 		}
 
 		bool	is_empty() const
@@ -69,7 +64,7 @@ class bst_node
 
 		bool	is_root() const
 		{
-			if (this->_parent._value == NULL)
+			if (this->_parent->_value == NULL)
 				return (true);
 			else
 				return (false);

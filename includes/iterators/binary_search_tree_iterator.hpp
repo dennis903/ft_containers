@@ -9,8 +9,8 @@ class binary_search_tree_iterator
 {
 	public:
 		typedef T													value_type;
-		typedef ft::bst_node										node;
-		typedef typename node*										node_ptr;
+		typedef ft::bst_node<T>										node;
+		typedef node*												node_ptr;
 		typedef Pointer												pointer;
 		typedef Reference											reference;
 		typedef size_t												size_type;
@@ -26,7 +26,7 @@ class binary_search_tree_iterator
 		{}
 
 		binary_search_tree_iterator(const node_ptr &other) :
-			ptr(x)
+			ptr(other)
 		{}
 
 		binary_search_tree_iterator(const iterator &other) :
