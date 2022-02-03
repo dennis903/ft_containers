@@ -38,7 +38,7 @@ namespace ft
 		std::string prev_str = "    ";
 		Trunk *trunk = new Trunk(prev, prev_str);
 
-		printTree(root->right, trunk, true);
+		printTree(root->_right, trunk, true);
 
 		if (!prev) {
 			trunk->str = "———";
@@ -57,13 +57,13 @@ namespace ft
 		// if (root->color == RED)
 		// 	std::cout <<"\033[0;31m" << "[" << root->value->first << "]" << std::endl;
 		// if (root->color == BLACK)
-		std::cout <<"\033[0;34m" << "[" << root->value->first << "]" << std::endl;
+		std::cout <<"\033[0;34m" << "[" << root->_value->first << "]" << std::endl;
 		std::cout << "\033[0;37m";
 		if (prev) {
 			prev->str = prev_str;
 		}
 		trunk->str = "   |";
-		printTree(root->left, trunk, false);
+		printTree(root->_left, trunk, false);
 	}
 } // namespace ft
 

@@ -1,6 +1,7 @@
 #ifndef BINARY_SEARCH_TREE_HPP
 # define BINARY_SEARCH_TREE_HPP
 # include <memory>
+# include <iostream>
 # include "bst_node.hpp"
 # include "less.hpp"
 # include "pair.hpp"
@@ -27,26 +28,23 @@ class binary_search_tree
 		size_type					_size;
 
 	public:
-		binary_search_tree() : _comp(value_compare()), _node_alloc(node_alloc_type()), _size(0)
+		binary_search_tree(const node_alloc_type& init_node_alloc = node_alloc_type())
+		:
+			_comp(value_compare()), _node_alloc(init_node_alloc), _size(0)
 		{
 			this->_none = _node_alloc.allocate(1);
-			this->_node_alloc.construct(this->_none, node_alloc_type());
-			this->_none->_parent = this->_none;
-			this->_none->_left = this->_none;
-			this->_none->_right = this->_none;
+			this->_node_alloc.construct(this->_none, node_type(_none, _none, _none));
 			this->_root = this->_none;
 		}
 
-		binary_search_tree(const binary_search_tree< T > &other) : _comp(value_compare()), _node_alloc(node_alloc_type()), _size(0)
+		binary_search_tree(const binary_search_tree<value_type> &other, const node_alloc_type& init_node_alloc = node_alloc_type())
+		:
+			_comp(value_compare()), _node_alloc(node_alloc_type(init_node_alloc)), _size(0)
 		{
 			this->_none = _node_alloc.allocate(1);
-			this->_node_alloc.construct(this->_none, node_alloc_type());
+			this->_node_alloc.construct(this->_none, node_type(_none, _none, _none));
 			this->_root = this->_none;
-			this->_none->_parent = this->_none;
-			this->_none->_left = this->_none;
-			this->_none->_right = this->_none;
-			this->_root = this->_none;
-			this->bst_copy(other);
+			this->copy(other);
 		}
 		~binary_search_tree()
 		{
@@ -91,6 +89,22 @@ class binary_search_tree
 				return (false);
 		}
 
+		node_type				*get_lowest()
+		{
+			node_type			*cur;
+			node_type			*parent;
+
+			if (is_empty())
+				return (this->_none);
+			cur = this->_root;
+			while (cur != this->_none)
+			{
+				parent = cur;
+				cur = cur->_left;
+			}
+			return (parent);
+		}
+
 		pair<node_type*, bool>	insert_pair(const value_type &value)
 		{
 			node_type	*node;
@@ -98,6 +112,8 @@ class binary_search_tree
 			node_type	*cur;
 
 			node = construct_node(value);
+
+			
 			if (this->is_empty())
 			{
 				this->_root = node;
@@ -116,16 +132,16 @@ class binary_search_tree
 					delete_node(node);
 					return (pair<node_type *, bool>(cur, false));
 				}
-				else if (_comp(value, cur->_value))
+				else if (_comp(value, *(cur->_value)))
 					cur = cur->_left;
-				else if (_comp(cur->_value, value))
+				else if (_comp(*(cur->_value), value))
 					cur = cur->_right;
 			}
 			// 루프가 끝나면 null노드에 도착한다.
 			cur = node;
 			cur->_left = this->_none;
 			cur->_right = this->_none;
-			if (_comp(parent->_value, cur->_value))
+			if (this->_comp(*(parent->_value), *(cur->_value)))
 				parent->_right = cur;
 			else
 				parent->_left = cur;
@@ -204,14 +220,17 @@ class binary_search_tree
 			node_type			*node;
 
 			node = _node_alloc.allocate(1);
-			this->_node_alloc.construct(node, node_alloc_type(value));
+			this->_node_alloc.construct(node, node_type(value));
+			node->_parent = this->_none;
+			node->_left = this->_none;
+			node->_right = this->_none;
 			return (node);
 		}
 
 	private:
 		bool					check_same_value(node_type *node, const value_type *value)
 		{
-			return (!_comp(node->_value, value) && !_comp(value, node->_value));
+			return (!_comp(node->get_value(), *value) && !_comp(*value, node->get_value()));
 		}
 };
 }

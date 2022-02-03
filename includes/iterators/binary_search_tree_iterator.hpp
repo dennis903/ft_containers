@@ -42,7 +42,7 @@ class binary_search_tree_iterator
 
 		pointer operator->() const
 		{
-			return (&this->ptr->get_value());
+			return (&(this->ptr->get_value()));
 		}
 
 		iterator& operator++()

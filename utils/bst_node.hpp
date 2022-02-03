@@ -16,34 +16,39 @@ class bst_node
 		bst_node		*_left;
 		bst_node		*_right;
 
-		bst_node() : _value(NULL), _parent(NULL), _left(NULL), _right(NULL), _alloc(allocate_type())
+		bst_node() 
+		:
+			_value(NULL), _parent(NULL), _left(NULL), _right(NULL)
 		{}
 
-		bst_node(const value_type &value) : _parent(NULL), _left(NULL), _right(NULL), _alloc(allocate_type())
+		bst_node(bst_node *parent, bst_node *left, bst_node *right)
+		:
+			_value(NULL), _alloc(allocate_type()), _parent(parent), _left(left), _right(right)
+		{}
+
+		bst_node(const value_type &value)
+		:
+			_alloc(allocate_type()), _parent(NULL), _left(NULL), _right(NULL)
 		{
-			if (value != NULL)
-			{
 				this->_value = _alloc.allocate(1);
 				_alloc.construct(this->_value, value);
-			}
 		}
 
-		bst_node(const bst_node<T> *other) : _parent(NULL), _left(NULL), _right(NULL), _alloc(allocate_type())
+		bst_node(const bst_node<T> *other)
+		:
+			_alloc(allocate_type()), _parent(NULL), _left(NULL), _right(NULL)
 		{
-			if (other != NULL)
-			{
 				this->_value = _alloc.allocate(1);
-				_alloc.construct(this->_value, other->_value);
-			}
+				_alloc.construct(this->_value, *(other->_value));
 		}
 
 		~bst_node()
 		{
-			if (this->_value != NULL)
-			{
-				this->_alloc.destroy(this->_value);
-				this->_alloc.deallocate(this->_value, 1);
-			}
+			// if (this->_value != NULL)
+			// {
+			// 	this->_alloc.destroy(this->_value);
+			// 	this->_alloc.deallocate(this->_value, 1);
+			// }
 		}
 
 		bst_node &operator=(const bst_node<T> &other)
@@ -52,6 +57,11 @@ class bst_node
 			this->_parent = other._parent;
 			this->_left = other._left;
 			this->_right = other._right;
+		}
+
+		T&		get_value() const
+		{
+			return (*this->_value);
 		}
 
 		bool	is_empty() const
@@ -85,6 +95,7 @@ class bst_node
 			else
 				return (false);
 		}
+
 };
 }
 #endif

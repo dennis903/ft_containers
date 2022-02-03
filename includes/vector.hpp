@@ -17,19 +17,19 @@ template<typename T, typename _Alloc = std::allocator<T>, typename Category = ft
 class	vector
 {
 	public:
-		typedef T								value_type;
-		typedef _Alloc							allocate_type;
-		typedef size_t							size_type;
-		typedef ptrdiff_t						difference_type; //두 포인터를 뺀 결과
-		typedef value_type&						reference;
-		typedef const value_type&				const_reference;
-		typedef value_type*						pointer;
-		typedef const value_type*				const_pointer;
-		typedef random_access_iterator<T, T*, T&>		iterator;
+		typedef T												value_type;
+		typedef _Alloc											allocate_type;
+		typedef size_t											size_type;
+		typedef ptrdiff_t										difference_type; //두 포인터를 뺀 결과
+		typedef value_type&										reference;
+		typedef const value_type&								const_reference;
+		typedef value_type*										pointer;
+		typedef const value_type*								const_pointer;
+		typedef random_access_iterator<T, T*, T&>				iterator;
 		typedef random_access_iterator<T, const T*, const T&>	const_iterator;
-		typedef reverse_iterator<const_iterator>		const_reverse_iterator;
-		typedef reverse_iterator<iterator>				reverse_iterator; //cost_reverse_iterator과 reverse_iterator랑 순서 바꾸면 컴파일이 안됌.
-		typedef Category								iterator_category;
+		typedef reverse_iterator<const_iterator>				const_reverse_iterator;
+		typedef reverse_iterator<iterator>						reverse_iterator; //cost_reverse_iterator과 reverse_iterator랑 순서 바꾸면 컴파일이 안됌.
+		typedef Category										iterator_category;
 
 	private:
 		pointer _arr;
