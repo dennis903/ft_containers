@@ -1,5 +1,6 @@
 #ifndef PAIR_HPP
 # define PAIR_HPP
+# include <iostream>
 namespace ft
 {
 template<class T1, class T2>
@@ -49,14 +50,9 @@ bool operator!=( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs )
 template< class T1, class T2 >
 bool operator<( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs )
 {
-	if (lhs.first < rhs.first)
-		return (true);
-	else if (lhs.first > rhs.first)
-		return (false);
-	else if (lhs.second < rhs.second)
-		return (true);
-	else
-		return (false); 
+	// std::cout << "operator" << std::endl;
+	// std::cout << lhs.second << " " << rhs.second << std::endl;
+	return (lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second ));
 }
 
 template< class T1, class T2 >
@@ -74,7 +70,7 @@ bool operator>( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs )
 template< class T1, class T2 >
 bool operator>=( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs )
 {
-	return (!(rhs > lhs));
+	return (!(lhs < rhs));
 }
 }
 #endif

@@ -6,6 +6,8 @@
 # include "../utils/bst_node.hpp"
 # include "../utils/binary_function.hpp"
 # include "../utils/binary_search_tree.hpp"
+# include "../utils/enable_if.hpp"
+# include "../utils/is_integral.hpp"
 # include "iterators/binary_search_tree_iterator.hpp"
 # include "iterators/reverse_iterator.hpp"
 
@@ -40,59 +42,96 @@ class	map
 					return (comp(lhs, rhs));
 				}
 		};
-		typedef binary_search_tree_iterator<value_type, value_type*, value_type&>	iterator;
+		typedef binary_search_tree_iterator<value_type, value_type*, value_type&>				iterator;
 		typedef binary_search_tree_iterator<value_type, const value_type*, const value_type&>	const_iterator;
-		typedef reverse_iterator<const_iterator>	const_reverse_iterator;
-		typedef reverse_iterator<iterator>			reverse_iterator;
+		typedef reverse_iterator<const_iterator>												const_reverse_iterator;
+		typedef reverse_iterator<iterator>														reverse_iterator;
 		//constructor
 
 	private:
 		key_compare								_comp;
 		allocator_type							_alloc;
 	public:
-		tree_type								_tree; //이거 나중에 private로 두기
+		tree_type								_tree;
 		//constructor
 		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
-			:  _comp(comp), _alloc(alloc),  _tree()
+			:  _comp(comp), _alloc(alloc), _tree()
 		{}
 
-		// template <class InputIterator>
-		// map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
-		// 	: _tree(), _comp(comp), _alloc(alloc) //insert를 만든 이후에 만들기
-		// {
+		template <class InputIterator>
+		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
+			: _tree(), _comp(comp), _alloc(alloc) //insert를 만든 이후에 만들기
+		{
+			insert(first, last);
+		}
 
-		// }
-
+		map(const map& x)
+		{
+			*this = x;
+		}
 		//destructor
 		~map() {}
 
 		//operator =
-		map&	operator= (const map& x)
+		map&	operator=(const map& x)
 		{
+			this->_alloc = x._alloc;
+			this->_comp = x._comp;
 			this->_tree.copy(x._tree);
 			return (*this);
 		}
 
-		iterator	begin()
+		mapped_type&			operator[] (const key_type& k)
+		{
+			return ((*((this->insert(ft::make_pair(k,mapped_type()))).first)).second);
+		}
+
+		iterator				begin()
 		{
 			return (iterator(this->_tree.get_lowest()));
 		}
 
-		const_iterator	begin() const
+		const_iterator			begin() const
 		{
 			return (const_iterator(this->_tree.get_lowest()));
 		}
 
-		pair<iterator, bool>	insert (const value_type& val)
+		iterator				end()
+		{
+			return (iterator(this->_tree.get_none()));
+		}
+
+		const_iterator			end() const
+		{
+			return (const_iterator(this->_tree.get_none()));
+		}
+
+		void					clear()
+		{
+			this->_tree.delete_all();
+		}
+
+		pair<iterator, bool>	insert(const value_type& val)
 		{
 			pair<node_type *, bool> ret = this->_tree.insert_pair(val);
 			return (ft::make_pair(iterator(ret.first), ret.second));
 		}
 
-		// iterator				insert (iterator position, const value_type &val)
-		// {
+		iterator				insert (iterator position, const value_type &val)
+		{
+			(void)position;
+			return (_tree.insert_pair(val).first);
+		}
 
-		// }
+		template <class InputIterator>
+		void					insert (InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
+		{
+			while (first != last)
+			{
+				insert(*first);
+				first++;
+			}
+		}
 };
 }
 #endif

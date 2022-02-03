@@ -56,7 +56,12 @@ class binary_search_tree
 			return (this->_root);
 		}
 
-		void					copy(const binary_search_tree &other)
+		node_type*				get_none() const
+		{
+			return (this->_none);
+		}
+
+		void					copy(const binary_search_tree<T> &other)
 		{
 			this->delete_all();
 			copy(other._root);
@@ -127,7 +132,7 @@ class binary_search_tree
 			while (cur != this->_none)
 			{
 				parent = cur;
-				if (check_same_value(cur, node->_value))
+				if (cur->get_value().first == value.first)
 				{
 					delete_node(node);
 					return (pair<node_type *, bool>(cur, false));
@@ -225,12 +230,6 @@ class binary_search_tree
 			node->_left = this->_none;
 			node->_right = this->_none;
 			return (node);
-		}
-
-	private:
-		bool					check_same_value(node_type *node, const value_type *value)
-		{
-			return (!_comp(node->get_value(), *value) && !_comp(*value, node->get_value()));
 		}
 };
 }
