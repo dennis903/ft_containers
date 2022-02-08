@@ -48,7 +48,8 @@ class binary_search_tree
 		}
 		~binary_search_tree()
 		{
-			// delete_all();
+			delete_all();
+			delete_node(this->_none);
 		}
 
 		node_type*				get_root() const
@@ -158,7 +159,6 @@ class binary_search_tree
 		void					delete_all()
 		{
 			delete_all(this->_root);
-			delete_node(this->_none);
 		}
 
 		void					delete_all(node_type *node)
@@ -203,8 +203,9 @@ class binary_search_tree
 			}
 			else	//root node만 있을 경우
 			{
-				tmpNode = NULL;
+				tmpNode = this->_none;
 				delete_node(this->_root);
+				this->_root = this->_none;
 			}
 		}
 

@@ -19,11 +19,11 @@ int main ()
     std::cout << it->first << " => " << it->second << '\n';
   mymap.clear();
   mymap['a']=1101;
-//   mymap['b']=2202;
+  mymap['b']=2202;
 
-//   std::cout << "mymap contains:\n";
-//   for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-//     std::cout << it->first << " => " << it->second << '\n';
+  std::cout << "mymap contains:\n";
+  for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
 
   return 0;
 }
