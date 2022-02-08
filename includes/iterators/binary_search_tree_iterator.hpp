@@ -55,31 +55,25 @@ class binary_search_tree_iterator
 		{
 			node_ptr ret = this->ptr;
 
-			if (!ret->_right->is_empty()) //현재 노드에 오른쪽 노드가 존재할 시 오른쪽 노드의 가장 왼쪽 노드가 다음 iter가 된다.
+			if (!ret->_right->is_empty())
 			{
-				if (test)
-					std::cout << "1" << std::endl;
 				ret = ret->_right;
 				while (!ret->_left->is_empty())
 					ret = ret->_left;
+				this->ptr = ret;
 			}
-			else if (ret->_parent->is_empty()) //부모 노드가 empty라는 이야기는 노드가 root노드 라는 것
-				ret = this->ptr->_parent;
-			else if (ret->is_empty())
-				ret = ret->_right;
-			else
+			else if (!this->ptr->_parent->is_empty())
 			{
-				while (!ret->_parent->is_empty()) //오른쪽에 노드가 없을 경우 부모노드가 left노드 일 때 까지 타고 올라간다. 그 이후 left노드의 부모 노드가 다음 iter가 된다.
+				while (!ret->_parent->is_empty())
 				{
 					if (ret->is_left())
-					{
-						ret = ret->_parent;
 						break ;
-					}
 					ret = ret->_parent;
 				}
+				this->ptr = ret->_parent;
 			}
-			this->ptr = ret;
+			else
+				this->ptr = ret->_parent;
 			return (*this);
 		}
 
@@ -99,23 +93,20 @@ class binary_search_tree_iterator
 				ret = ret->_left;
 				while (!ret->_right->is_empty())
 					ret = ret->_right;
+				this->ptr = ret;
 			}
-			else if (ret->_parent->is_empty())
-				ret = this->ptr->_parent;
-			else if (ret->is_empty())
-				ret = ret->_left;
-			else
+			else if (!this->ptr->_parent->is_empty())
 			{
 				while (!ret->_parent->is_empty())
 				{
 					if (ret->is_right())
-					{
-						ret = ret->_parent;
 						break ;
-					}
 					ret = ret->_parent;
 				}
+				this->ptr = ret->_parent;
 			}
+			else
+				this->ptr = ret->_parent;
 			return (*this);
 		}
 

@@ -3,46 +3,25 @@
 #include "utils/print_tree.hpp"
 #include "utils/pair.hpp"
 #include "includes/map.hpp"
-#include <string>
+#include <iostream>
 #include <map>
 
 int main ()
 {
   ft::map<char,int> mymap;
 
-  mymap['e'] = 100;
-  mymap['a'] = 200;
-  mymap['b'] = 200;
-  mymap['c'] = 200;
-  mymap['d'] = 200;
-  mymap['f'] = 200;
-  mymap['g'] = 200;
-  mymap['h'] = 200;
-  mymap['i'] = 300;
+  mymap['x']=100;
+  mymap['y']=200;
+  mymap['z']=300;
 
-  printTree(mymap._tree.get_root(), NULL, false);
-  ft::map<char, int>::iterator it = mymap.begin();
-  std::cout << it->first << " " << it->second << "\n";
-  it++;
-  std::cout << it->first << " " << it->second << "\n";
-  it++;
-  std::cout << it->first << " " << it->second << "\n";
-  it++;
-  std::cout << it->first << " " << it->second << "\n";
-  it++;
-  std::cout << it->first << " " << it->second << "\n";
-  it++;
-  std::cout << it->first << " " << it->second << "\n";
-  it++;
-  std::cout << it->first << " " << it->second << "\n";
-  it++;
-  std::cout << it->first << " " << it->second << "\n";
-  it++;
-  std::cout << it->first << " " << it->second << "\n";
-  it++;
-  if (it == mymap.end())
-	std::cout << "end" << std::endl;
-  // show content:
+  std::cout << "mymap contains:\n";
+  for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
+  mymap.clear();
+  mymap['a']=1101;
+//   mymap['b']=2202;
+
+//   std::cout << "mymap contains:\n";
 //   for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 //     std::cout << it->first << " => " << it->second << '\n';
 

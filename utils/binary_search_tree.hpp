@@ -48,7 +48,7 @@ class binary_search_tree
 		}
 		~binary_search_tree()
 		{
-			delete_all();
+			// delete_all();
 		}
 
 		node_type*				get_root() const
@@ -88,7 +88,7 @@ class binary_search_tree
 
 		bool					is_empty()
 		{
-			if (this->_root->_value == NULL)
+			if (this->_root == this->_none)
 				return (true);
 			else
 				return (false);
@@ -118,13 +118,13 @@ class binary_search_tree
 
 			node = construct_node(value);
 
-			
 			if (this->is_empty())
 			{
 				this->_root = node;
 				this->_root->_parent = this->_none;
 				this->_root->_left = this->_none;
 				this->_root->_right = this->_none;
+				this->_none->_parent = find_maximum(_root);
 				return (pair<node_type*, bool>(this->_root, true));
 			}
 			cur = this->_root;
@@ -142,7 +142,7 @@ class binary_search_tree
 				else if (_comp(*(cur->_value), value))
 					cur = cur->_right;
 			}
-			// 루프가 끝나면 null노드에 도착한다.
+			// 루프가 끝나면 none노드에 도착한다.
 			cur = node;
 			cur->_left = this->_none;
 			cur->_right = this->_none;
@@ -151,6 +151,7 @@ class binary_search_tree
 			else
 				parent->_left = cur;
 			cur->_parent = parent;
+			this->_none->_parent = find_maximum(this->_root);
 			return (pair<node_type *, bool>(cur, true));
 		}
 
@@ -174,7 +175,7 @@ class binary_search_tree
 			else if (node->is_left())
 				node->_parent->_left = this->_none;
 			else
-				node->_parent->_right = this->_none;
+				node->_parent->_right = this->_none;	
 			delete_node(node);
 		}
 
@@ -211,6 +212,13 @@ class binary_search_tree
 		{
 			while (node->_left != this->_none)
 				node = node->_left;
+			return (node);
+		}
+
+		node_type				*find_maximum(node_type *node)
+		{
+			while (node->_right != this->_none)
+				node = node->_right;
 			return (node);
 		}
 
