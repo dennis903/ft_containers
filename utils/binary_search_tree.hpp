@@ -62,6 +62,11 @@ class binary_search_tree
 			return (this->_none);
 		}
 
+		size_type				get_size() const
+		{
+			return (this->_size);
+		}
+
 		void					copy(const binary_search_tree<T> &other)
 		{
 			this->delete_all();
@@ -87,7 +92,7 @@ class binary_search_tree
 			}
 		}
 
-		bool					is_empty()
+		bool					is_empty() const
 		{
 			if (this->_root == this->_none)
 				return (true);
@@ -95,7 +100,7 @@ class binary_search_tree
 				return (false);
 		}
 
-		node_type				*get_lowest()
+		node_type				*get_lowest() const
 		{
 			node_type			*cur;
 			node_type			*parent;
@@ -110,6 +115,7 @@ class binary_search_tree
 			}
 			return (parent);
 		}
+
 
 		pair<node_type*, bool>	insert_pair(const value_type &value)
 		{
@@ -126,6 +132,7 @@ class binary_search_tree
 				this->_root->_left = this->_none;
 				this->_root->_right = this->_none;
 				this->_none->_parent = find_maximum(_root);
+				this->_size += 1;
 				return (pair<node_type*, bool>(this->_root, true));
 			}
 			cur = this->_root;
@@ -153,6 +160,7 @@ class binary_search_tree
 				parent->_left = cur;
 			cur->_parent = parent;
 			this->_none->_parent = find_maximum(this->_root);
+			this->_size++;
 			return (pair<node_type *, bool>(cur, true));
 		}
 
@@ -177,6 +185,20 @@ class binary_search_tree
 			else
 				node->_parent->_right = this->_none;	
 			delete_node(node);
+		}
+
+		iterator				search_by_key(const value_type &value) const
+		{
+			iterator	it;
+
+			it = iterator(get_lowest());
+			while (it != iterator(this->get_none()))
+			{
+				if (it->first == value.first)
+					return (it);
+				it++;
+			}
+			return (it);
 		}
 
 		void					delete_root()
@@ -227,6 +249,7 @@ class binary_search_tree
 		{
 			this->_node_alloc.destroy(node);
 			this->_node_alloc.deallocate(node, 1);
+			this->_size--;
 		}
 
 		node_type				*construct_node(const value_type &value)
@@ -240,6 +263,7 @@ class binary_search_tree
 			node->_right = this->_none;
 			return (node);
 		}
+
 };
 }
 #endif

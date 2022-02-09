@@ -111,6 +111,90 @@ class	map
 			this->_tree.delete_all();
 		}
 
+		size_type				count (const key_type& k) const
+		{
+			iterator			check_key;
+
+			check_key = _tree.search_by_key(value_type(k, mapped_type()));
+			if (check_key == iterator(this->_tree.get_none()))
+				return (0);
+			else
+				return (1);
+		}
+
+		bool					empty() const
+		{
+			if (this->_tree.get_size() == 0)
+				return (1);
+			else
+				return (0);
+		}
+
+		// pair<const_iterator, const_iterator>	equal_range (const key_type& k) const
+		// {
+		// }
+
+		// pair<iterator, iterator> 				equal_range(const key_type& k)
+		// {
+		// }
+
+		iterator				lower_bound (const key_type &k)
+		{
+			iterator	it;
+
+			it = begin();
+			while (it != end())
+			{
+				if (it->first >= k)
+					return (it);
+				it++;
+			}
+			return (it);
+		}
+
+		const_iterator			lower_bound (const key_type &k) const
+		{
+			iterator	it;
+
+			it = begin();
+			while (it != end())
+			{
+				if (it->first >= k)
+					return (it);
+				it++;
+			}
+			return (it);
+		}
+
+		iterator				upper_bound (const key_type& k)
+		{
+			iterator	it;
+
+			it = begin();
+			while (it != end())
+			{
+				if (it->first > k)
+					return (it);
+				it++;
+			}
+			return (it);
+
+		}
+
+		const_iterator			upper_bound (const key_type& k) const
+		{
+			iterator	it;
+
+			it = begin();
+			while (it != end())
+			{
+				if (it->first > k)
+					return (it);
+				it++;
+			}
+			return (it);
+		}
+
 		pair<iterator, bool>	insert(const value_type& val)
 		{
 			pair<node_type *, bool> ret = this->_tree.insert_pair(val);
