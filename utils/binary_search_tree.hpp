@@ -116,6 +116,10 @@ class binary_search_tree
 			return (parent);
 		}
 
+		void					erase(iterator position)
+		{
+			erase_case(position->get_ptr());
+		}
 
 		pair<node_type*, bool>	insert_pair(const value_type &value)
 		{
@@ -203,25 +207,35 @@ class binary_search_tree
 
 		void					delete_root()
 		{
-			node_type *tmpNode;
+			node_type	*tmpNode;
 
 			if (this->_root->_left == this->_none && this->_root->_right != this->_none) //왼쪽에 노드가 있고 오른쪽엔 노드가 없는 경우
 			{
 				tmpNode = this->_root->_left;
+				tmpNode->_parent = this->_none;
+				tmpNode->_right = this->_root->_right;
 				delete_node(this->_root);
 				this->_root = tmpNode;
 			}
 			else if (this->_root->_right == this->_none && this->_root->_left != this->_none) //오른쪽에 노드가 있고 왼쪽엔 노드가 없는 경우
 			{
 				tmpNode = this->_root->_right;
+				tmpNode->_parent = this->_none;
+				tmpNode->_left = this->_root->_left;
 				delete_node(this->_root);
 				this->_root = tmpNode;
 			}
 			else if (this->_root->_right != this->_none && this->_root->_left != this->_none) // 양쪽에 노드가 있을 경우
 			{
-				tmpNode = find_minimum(this->_root->_right);
-				this->_root = tmpNode;
-				delete_node(tmpNode);
+				// node_type	*tmpRoot;
+
+				// tmpRoot = this->_root;
+				// tmpNode = find_minimum(this->_root->_right);
+				// this->_root = tmpNode;
+				// this->_root->_left = tmpRoot->_left;
+				// this->_root->_right = tmpRoot->_right;
+				// this->_root->_parent = this->_none;
+				// delete_node(tmpRoot);
 			}
 			else	//root node만 있을 경우
 			{
@@ -264,6 +278,49 @@ class binary_search_tree
 			return (node);
 		}
 
+	private:
+		void					erase_case(node_type *node)
+		{
+			if (node->is_root())
+				delete_root();
+			else if (node->_left == this->_none && node->_right == this->_none)
+				erase_case1(node);
+			else if (node->_left != this->_none && node->_right == this->_none)
+				erase_case2(node);
+			else if (node->_left == this->_none && node->_right != this->_none)
+				erase_case3(node);
+			else if (node->_left != this->_none && node->_right != this->_none)
+				erase_case4(node);
+		}
+
+		void					erase_case1(node_type *node)
+		{
+			if (node->is_left())
+				node->_parent->_left = this->_none;
+			else if (node->is_right())
+				node->_parent->_right = this->_none;
+			delete_node(node);
+		}
+
+		void					erase_case2(node_type *node)
+		{
+			node_type	*tmpNode;
+
+			node->_parent->_left = node->_left;
+			node->_left->_parent = node->_parent;
+			delete_node(node);
+		}
+
+		void					erase_case3(node_type *node)
+		{
+			node->_parent->_right = node->_right;
+			node->_right->_parent = node->_parent;
+			delete_node(node);
+		}
+
+		void					erase_case4(node_type *node)
+		{
+		}
 };
 }
 #endif

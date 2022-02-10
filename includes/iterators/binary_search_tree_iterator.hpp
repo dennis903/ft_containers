@@ -16,6 +16,7 @@ class binary_search_tree_iterator
 		typedef size_t												size_type;
 		typedef Category											iterator_category;
 		typedef ptrdiff_t											difference_type;
+		typedef binary_search_tree_iterator<T, Pointer, Reference>	current_iterator;
 		typedef binary_search_tree_iterator<T, T*, T&>				iterator;
 		typedef binary_search_tree_iterator<T, const T*, const T&>	const_iterator;
 	private:
@@ -30,14 +31,20 @@ class binary_search_tree_iterator
 		{}
 
 		binary_search_tree_iterator(const iterator &other) :
-			ptr(other.ptr)
+			ptr(other.get_ptr())
 		{}
 
 		~binary_search_tree_iterator() {}
 
-		iterator& operator=(const iterator& other)
+		node_ptr			get_ptr() const
 		{
-			this->ptr = other.ptr;
+			return (this->ptr);
+		}
+
+		template<class T1, class TP, class TR>
+		current_iterator& operator=(const binary_search_tree_iterator<T1, TP, TR>& other)
+		{
+			this->ptr = other.get_ptr();
 			return (*this);
 		}
 
@@ -51,7 +58,7 @@ class binary_search_tree_iterator
 			return (&(this->ptr->get_value()));
 		}
 
-		iterator& operator++()
+		current_iterator& operator++()
 		{
 			node_ptr ret = this->ptr;
 
@@ -77,14 +84,14 @@ class binary_search_tree_iterator
 			return (*this);
 		}
 
-		iterator operator++(int)
+		current_iterator operator++(int)
 		{
-			iterator temp(*this);
+			current_iterator temp(*this);
 			operator++();
 			return (temp);
 		}
 
-		iterator& operator--()
+		current_iterator& operator--()
 		{
 			node_ptr ret = this->ptr;
 
@@ -110,19 +117,21 @@ class binary_search_tree_iterator
 			return (*this);
 		}
 
-		iterator operator--(int)
+		current_iterator operator--(int)
 		{
-			iterator temp(*this);
+			current_iterator temp(*this);
 			operator--();
 			return (temp);
 		}
 
-		bool operator==(const iterator& x)
+		template<class T1, class TP, class TR>
+		bool operator==(const binary_search_tree_iterator<T1, TP, TR>& x)
 		{
 			return (this->ptr == x.ptr);
 		}
 
-		bool operator!=(const iterator& x)
+		template<class T1, class TP, class TR>
+		bool operator==(const binary_search_tree_iterator<T1, TP, TR>& x)
 		{
 			return (this->ptr != x.ptr);
 		}

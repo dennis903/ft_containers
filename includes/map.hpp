@@ -52,7 +52,7 @@ class	map
 		key_compare								_comp;
 		allocator_type							_alloc;
 	public:
-		tree_type								_tree;
+		tree_type								_tree; //이놈 private로 올리기
 		//constructor
 		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
 			:  _comp(comp), _alloc(alloc), _tree()
@@ -81,7 +81,7 @@ class	map
 			return (*this);
 		}
 
-		mapped_type&			operator[] (const key_type& k)
+		mapped_type&			operator[](const key_type& k)
 		{
 			return ((*((this->insert(ft::make_pair(k,mapped_type()))).first)).second);
 		}
@@ -111,7 +111,7 @@ class	map
 			this->_tree.delete_all();
 		}
 
-		size_type				count (const key_type& k) const
+		size_type				count(const key_type& k) const
 		{
 			iterator			check_key;
 
@@ -130,15 +130,41 @@ class	map
 				return (0);
 		}
 
-		// pair<const_iterator, const_iterator>	equal_range (const key_type& k) const
-		// {
-		// }
+		pair<const_iterator, const_iterator>	equal_range(const key_type& k) const
+		{
+			return (make_pair(lower_bound(k), upper_bound(k)));
+		}
 
-		// pair<iterator, iterator> 				equal_range(const key_type& k)
-		// {
-		// }
+		pair<iterator, iterator> 				equal_range(const key_type& k)
+		{
+			return (make_pair(lower_bound(k), upper_bound(k)));
+		}
 
-		iterator				lower_bound (const key_type &k)
+		void					erase(iterator position)
+		{
+			node_type			*tmp;
+
+			
+			this->_tree.erase(position);
+		}
+
+		size_type				erase(const key_type& k)
+		{
+			iterator	it;
+
+			it = this->find(k);
+			if (it == this->end())
+				return (0);
+			erase(it);
+			return (1);
+		}
+
+		void					erase(iterator first, iterator last)
+		{
+
+		}
+
+		iterator				lower_bound(const key_type &k)
 		{
 			iterator	it;
 
@@ -152,7 +178,7 @@ class	map
 			return (it);
 		}
 
-		const_iterator			lower_bound (const key_type &k) const
+		const_iterator			lower_bound(const key_type &k) const
 		{
 			iterator	it;
 
@@ -166,7 +192,7 @@ class	map
 			return (it);
 		}
 
-		iterator				upper_bound (const key_type& k)
+		iterator				upper_bound(const key_type& k)
 		{
 			iterator	it;
 
@@ -181,7 +207,7 @@ class	map
 
 		}
 
-		const_iterator			upper_bound (const key_type& k) const
+		const_iterator			upper_bound(const key_type& k) const
 		{
 			iterator	it;
 
@@ -201,20 +227,48 @@ class	map
 			return (ft::make_pair(iterator(ret.first), ret.second));
 		}
 
-		iterator				insert (iterator position, const value_type &val)
+		iterator				insert(iterator position, const value_type &val)
 		{
 			(void)position;
 			return (_tree.insert_pair(val).first);
 		}
 
 		template <class InputIterator>
-		void					insert (InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
+		void					insert(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
 		{
 			while (first != last)
 			{
 				insert(*first);
 				first++;
 			}
+		}
+
+		iterator				find(const key_type& k)
+		{
+			iterator	it;
+
+			it = this->begin();
+			while (it != this->end())
+			{
+				if (it->first == k)
+					break ;
+				it++;
+			}
+			return (it);
+		}
+
+		const_iterator			find(const key_type& k) const
+		{
+			iterator	it;
+
+			it = this->begin();
+			while (it != this->end())
+			{
+				if (it->first == k)
+					break ;
+				it++;
+			}
+			return (it);
 		}
 };
 }
