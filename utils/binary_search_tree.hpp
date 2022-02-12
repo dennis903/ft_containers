@@ -278,49 +278,49 @@ class binary_search_tree
 			return (node);
 		}
 
-	private:
-		void					erase_case(node_type *node)
-		{
-			if (node->is_root())
-				delete_root();
-			else if (node->_left == this->_none && node->_right == this->_none)
-				erase_case1(node);
-			else if (node->_left != this->_none && node->_right == this->_none)
-				erase_case2(node);
-			else if (node->_left == this->_none && node->_right != this->_none)
-				erase_case3(node);
-			else if (node->_left != this->_none && node->_right != this->_none)
-				erase_case4(node);
-		}
+	// private:
+	// 	void					erase_case(node_type *node)
+	// 	{
+	// 		if (node->is_root())
+	// 			delete_root();
+	// 		else if (node->_left == this->_none && node->_right == this->_none)
+	// 			erase_case1(node);
+	// 		else if (node->_left != this->_none && node->_right == this->_none)
+	// 			erase_case2(node);
+	// 		else if (node->_left == this->_none && node->_right != this->_none)
+	// 			erase_case3(node);
+	// 		else if (node->_left != this->_none && node->_right != this->_none)
+	// 			erase_case4(node);
+	// 	}
 
-		void					erase_case1(node_type *node)
-		{
-			if (node->is_left())
-				node->_parent->_left = this->_none;
-			else if (node->is_right())
-				node->_parent->_right = this->_none;
-			delete_node(node);
-		}
+	// 	void					erase_case1(node_type *node)
+	// 	{
+	// 		if (node->is_left())
+	// 			node->_parent->_left = this->_none;
+	// 		else if (node->is_right())
+	// 			node->_parent->_right = this->_none;
+	// 		delete_node(node);
+	// 	}
 
-		void					erase_case2(node_type *node)
-		{
-			node_type	*tmpNode;
+	// 	void					erase_case2(node_type *node)
+	// 	{
+	// 		node_type	*tmpNode;
 
-			node->_parent->_left = node->_left;
-			node->_left->_parent = node->_parent;
-			delete_node(node);
-		}
+	// 		node->_parent->_left = node->_left;
+	// 		node->_left->_parent = node->_parent;
+	// 		delete_node(node);
+	// 	}
 
-		void					erase_case3(node_type *node)
-		{
-			node->_parent->_right = node->_right;
-			node->_right->_parent = node->_parent;
-			delete_node(node);
-		}
+	// 	void					erase_case3(node_type *node)
+	// 	{
+	// 		node->_parent->_right = node->_right;
+	// 		node->_right->_parent = node->_parent;
+	// 		delete_node(node);
+	// 	}
 
-		void					erase_case4(node_type *node)
-		{
-		}
+	// 	void					erase_case4(node_type *node)
+	// 	{
+	// 	}
 };
 }
 #endif

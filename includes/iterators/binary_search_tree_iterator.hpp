@@ -131,7 +131,7 @@ class binary_search_tree_iterator
 		}
 
 		template<class T1, class TP, class TR>
-		bool operator==(const binary_search_tree_iterator<T1, TP, TR>& x)
+		bool operator!=(const binary_search_tree_iterator<T1, TP, TR>& x)
 		{
 			return (this->ptr != x.ptr);
 		}

@@ -32,6 +32,7 @@ class	map
 		typedef ft::binary_search_tree<value_type>	tree_type;
 		class value_compare : ft::binary_function<value_type, value_type, bool>
 		{
+			friend class map<key_type, mapped_type, key_compare, allocator_type>;
 			protected:
 				Compare	comp;
 				value_compare( Compare c ) : comp(c) {}
@@ -39,7 +40,7 @@ class	map
 			public:
 				bool operator() (const value_type& lhs, const value_type& rhs) const
 				{
-					return (comp(lhs, rhs));
+					return (comp(lhs.first, rhs.first));
 				}
 		};
 		typedef binary_search_tree_iterator<value_type, value_type*, value_type&>				iterator;
@@ -140,29 +141,29 @@ class	map
 			return (make_pair(lower_bound(k), upper_bound(k)));
 		}
 
-		void					erase(iterator position)
-		{
-			node_type			*tmp;
+		// void					erase(iterator position)
+		// {
+		// 	node_type			*tmp;
 
-			
-			this->_tree.erase(position);
-		}
 
-		size_type				erase(const key_type& k)
-		{
-			iterator	it;
+		// 	this->_tree.erase(position);
+		// }
 
-			it = this->find(k);
-			if (it == this->end())
-				return (0);
-			erase(it);
-			return (1);
-		}
+		// size_type				erase(const key_type& k)
+		// {
+		// 	iterator	it;
 
-		void					erase(iterator first, iterator last)
-		{
+		// 	it = this->find(k);
+		// 	if (it == this->end())
+		// 		return (0);
+		// 	erase(it);
+		// 	return (1);
+		// }
 
-		}
+		// void					erase(iterator first, iterator last)
+		// {
+
+		// }
 
 		iterator				lower_bound(const key_type &k)
 		{
@@ -270,6 +271,68 @@ class	map
 			}
 			return (it);
 		}
+
+		allocator_type			get_allocator() const
+		{
+			return (this->_alloc);
+		}
+
+		key_compare				key_comp() const
+		{
+			return (this->_comp);
+		}
+
+		reverse_iterator		rbegin()
+		{
+			return (reverse_iterator(this->end()));
+		}
+
+		const_reverse_iterator	rbegin() const
+		{
+			return (const_reverse_iterator(this->end()));
+		}
+
+		size_type				max_size() const
+		{
+			allocator_type		alloc;
+			return (alloc.max_size());
+		}
+
+		size_type				size() const
+		{
+			return (this->_tree.get_size());
+		}
+
+		void					swap(map& x)
+		{
+			map		tmp;
+
+			tmp = *this;
+			*this = x;
+			x = tmp;
+		}
+
+		value_compare			value_comp() const
+		{
+			return (value_compare(key_compare()));
+		}
 };
+template <class Key, class T, class Compare, class Alloc>
+bool operator==(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
+{
+	return (!Compare(lhs, rhs) && !Compare(rhs, lhs));
+}
+
+template <class Key, class T, class Compare, class Alloc>
+bool operator!=(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
+{
+	return (!(lhs == rhs));
+}
+
+template <class Key, class T, class Compare, class Alloc>
+bool operator<(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs)
+{
+	return 
+}
 }
 #endif
