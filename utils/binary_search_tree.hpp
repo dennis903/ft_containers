@@ -207,42 +207,10 @@ class binary_search_tree
 
 		void					delete_root()
 		{
-			node_type	*tmpNode;
-
-			if (this->_root->_left == this->_none && this->_root->_right != this->_none) //왼쪽에 노드가 있고 오른쪽엔 노드가 없는 경우
-			{
-				tmpNode = this->_root->_left;
-				tmpNode->_parent = this->_none;
-				tmpNode->_right = this->_root->_right;
-				delete_node(this->_root);
-				this->_root = tmpNode;
-			}
-			else if (this->_root->_right == this->_none && this->_root->_left != this->_none) //오른쪽에 노드가 있고 왼쪽엔 노드가 없는 경우
-			{
-				tmpNode = this->_root->_right;
-				tmpNode->_parent = this->_none;
-				tmpNode->_left = this->_root->_left;
-				delete_node(this->_root);
-				this->_root = tmpNode;
-			}
-			else if (this->_root->_right != this->_none && this->_root->_left != this->_none) // 양쪽에 노드가 있을 경우
-			{
-				// node_type	*tmpRoot;
-
-				// tmpRoot = this->_root;
-				// tmpNode = find_minimum(this->_root->_right);
-				// this->_root = tmpNode;
-				// this->_root->_left = tmpRoot->_left;
-				// this->_root->_right = tmpRoot->_right;
-				// this->_root->_parent = this->_none;
-				// delete_node(tmpRoot);
-			}
-			else	//root node만 있을 경우
-			{
-				tmpNode = this->_none;
-				delete_node(this->_root);
-				this->_root = this->_none;
-			}
+			delete_node(this->_root);
+			this->_root = this->_none;
+			this->_none->_parent = find_maximum(this->_root);
+			this->_size--;
 		}
 
 		node_type				*find_minimum(node_type *node)
@@ -278,6 +246,15 @@ class binary_search_tree
 			return (node);
 		}
 
+		void					erase(const value_type &value)
+		{
+			erase(value, this->_root);
+		}
+
+		void					erase(const value_type &value, node_type *node)
+		{
+			
+		}
 	// private:
 	// 	void					erase_case(node_type *node)
 	// 	{

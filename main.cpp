@@ -8,20 +8,24 @@
 
 int main ()
 {
-  ft::map<char,int> mymap;
+  std::map<char,int> foo,bar;
 
-  mymap['x']=1001;
-  mymap['y']=2002;
-  mymap['z']=3003;
+  foo['x']=100;
+  foo['y']=200;
 
-  std::cout << "mymap contains:\n";
+  bar['a']=11;
+  bar['b']=22;
+  bar['c']=33;
 
-  ft::pair<char,int> highest = *mymap.rbegin();          // last element
+  swap(foo,bar);
 
-  ft::map<char,int>::iterator it = mymap.begin();
-  do {
+  std::cout << "foo contains:\n";
+  for (std::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
     std::cout << it->first << " => " << it->second << '\n';
-  } while ( mymap.value_comp()(*it++, highest) );
+
+  std::cout << "bar contains:\n";
+  for (std::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
 
   return 0;
 }

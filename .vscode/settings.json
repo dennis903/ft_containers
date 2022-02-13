@@ -12,9 +12,6 @@
         "vector": "cpp",
         "bitset": "cpp",
         "initializer_list": "cpp",
-<<<<<<< HEAD
-        "iostream": "cpp"
-=======
         "iostream": "cpp",
         "__config": "cpp",
         "__debug": "cpp",
@@ -67,7 +64,7 @@
         "memory_resource": "cpp",
         "__functional_03": "cpp",
         "__bits": "cpp",
-        "clocale": "cpp"
->>>>>>> 6406bca85d0796e99b057164eade3af0331b32bb
-    }
+        "clocale": "cpp",
+        "map": "cpp"
+}
 }

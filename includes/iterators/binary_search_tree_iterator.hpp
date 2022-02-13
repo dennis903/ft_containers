@@ -42,7 +42,7 @@ class binary_search_tree_iterator
 		}
 
 		template<class T1, class TP, class TR>
-		current_iterator& operator=(const binary_search_tree_iterator<T1, TP, TR>& other)
+		const current_iterator& operator=(const binary_search_tree_iterator<T1, TP, TR>& other)
 		{
 			this->ptr = other.get_ptr();
 			return (*this);
@@ -127,13 +127,13 @@ class binary_search_tree_iterator
 		template<class T1, class TP, class TR>
 		bool operator==(const binary_search_tree_iterator<T1, TP, TR>& x)
 		{
-			return (this->ptr == x.ptr);
+			return (this->ptr == x.get_ptr());
 		}
 
 		template<class T1, class TP, class TR>
 		bool operator!=(const binary_search_tree_iterator<T1, TP, TR>& x)
 		{
-			return (this->ptr != x.ptr);
+			return (this->ptr != x.get_ptr());
 		}
 };
 }
