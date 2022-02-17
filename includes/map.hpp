@@ -30,13 +30,11 @@ class	map
 		typedef value_type*							pointer;
 		typedef const value_type*					const_pointer;
 		typedef ft::bst_node<value_type>			node_type;
-		typedef ft::binary_search_tree<value_type>	tree_type;
 		class value_compare : ft::binary_function<value_type, value_type, bool>
 		{
 			friend class map<key_type, mapped_type, key_compare, allocator_type>;
 			protected:
-				Compare	comp;
-				value_compare( Compare c ) : comp(c) {}
+				key_compare		comp;
 
 			public:
 				bool operator() (const value_type& lhs, const value_type& rhs) const
@@ -44,6 +42,7 @@ class	map
 					return (comp(lhs.first, rhs.first));
 				}
 		};
+		typedef ft::binary_search_tree<value_type, value_compare>	tree_type;
 		typedef binary_search_tree_iterator<value_type, value_type*, value_type&>				iterator;
 		typedef binary_search_tree_iterator<value_type, const value_type*, const value_type&>	const_iterator;
 		typedef reverse_iterator<const_iterator>												const_reverse_iterator;
@@ -54,15 +53,14 @@ class	map
 		key_compare								_comp;
 		allocator_type							_alloc;
 	public:
-		tree_type								_tree; //이놈 private로 올리기
 		//constructor
 		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
-			:  _comp(comp), _alloc(alloc), _tree()
+			:  _tree(), _comp(comp), _alloc(alloc)
 		{}
 
 		template <class InputIterator>
 		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
-			: _tree(), _comp(comp), _alloc(alloc) //insert를 만든 이후에 만들기
+			: _tree(), _comp(comp), _alloc(alloc)
 		{
 			insert(first, last);
 		}
@@ -108,6 +106,26 @@ class	map
 			return (const_iterator(this->_tree.get_none()));
 		}
 
+		reverse_iterator		rbegin()
+		{
+			return (reverse_iterator(this->end()));
+		}
+
+		const_reverse_iterator	rbegin() const
+		{
+			return (const_reverse_iterator(this->end()));
+		}
+
+		reverse_iterator		rend()
+		{
+			return (reverse_iterator(this->begin()));
+		}
+
+		const_reverse_iterator rend() const
+		{
+			return (const_reverse_iterator(this->begin()));
+		}
+
 		void					clear()
 		{
 			this->_tree.delete_all();
@@ -144,7 +162,7 @@ class	map
 
 		void					erase(iterator position)
 		{
-			erase(position->first);
+			this->_tree.erase(position.get_ptr());
 		}
 
 		size_type				erase(const key_type& k)
@@ -156,7 +174,7 @@ class	map
 				return (0);
 			else
 			{
-				this->_tree.erase(value_type(k, mapped_type()));
+				erase(it);
 				return (1);
 			}
 		}
@@ -284,16 +302,6 @@ class	map
 			return (this->_comp);
 		}
 
-		reverse_iterator		rbegin()
-		{
-			return (reverse_iterator(this->end()));
-		}
-
-		const_reverse_iterator	rbegin() const
-		{
-			return (const_reverse_iterator(this->end()));
-		}
-
 		size_type				max_size() const
 		{
 			allocator_type		alloc;
@@ -316,7 +324,7 @@ class	map
 
 		value_compare			value_comp() const
 		{
-			return (value_compare(key_compare()));
+			return (value_compare());
 		}
 };
 template <class Key, class T, class Compare, class Alloc>

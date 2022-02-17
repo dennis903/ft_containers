@@ -40,7 +40,7 @@ class	reverse_iterator
 
 		reverse_iterator &operator++(void)
 		{
-			this->_Iter -= 1;
+			this->_Iter--;
 			return (*this);
 		}
 
@@ -53,7 +53,7 @@ class	reverse_iterator
 
 		reverse_iterator &operator--(void)
 		{
-			this->_Iter += 1;
+			this->_Iter++;
 			return (*this);
 		}
 

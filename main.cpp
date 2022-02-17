@@ -1,31 +1,42 @@
-#include "utils/binary_search_tree.hpp"
-#include "utils/bst_node.hpp"
-#include "utils/print_tree.hpp"
-#include "utils/pair.hpp"
-#include "includes/map.hpp"
-#include <iostream>
-#include <map>
+#include "common.hpp"
+#include <list>
 
-int main ()
+#define T1 int
+#define T2 std::string
+typedef _pair<const T1, T2> T3;
+
+static int iter = 0;
+
+template <typename MAP, typename U>
+void	ft_erase(MAP &mp, U param)
 {
-  std::map<char,int> foo,bar;
+	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+	std::cout << "ret: " << mp.erase(param) << std::endl;
+	printSize(mp);
+}
 
-  foo['x']=100;
-  foo['y']=200;
+int		main(void)
+{
+	std::list<T3> lst;
+	unsigned int lst_size = 6;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
+	TESTED_NAMESPACE::map<T1, T2> mp(lst.begin(), lst.end());
+	printSize(mp);
 
-  bar['a']=11;
-  bar['b']=22;
-  bar['c']=33;
+	for (int i = 2; i < 4; ++i)
+		ft_erase(mp, i);
 
-  swap(foo,bar);
+	ft_erase(mp, mp.begin()->first);
+	ft_erase(mp, (--mp.end())->first);
 
-  std::cout << "foo contains:\n";
-  for (std::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
+	mp[-1] = "Hello";
+	mp[10] = "Hi there";
+	mp[10] = "Hi there";
+	printSize(mp);
 
-  std::cout << "bar contains:\n";
-  for (std::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
+	ft_erase(mp, 0);
+	ft_erase(mp, 1);
 
-  return 0;
+	return (0);
 }

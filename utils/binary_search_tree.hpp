@@ -14,7 +14,7 @@ class binary_search_tree
 {
 	public:
 		typedef T														value_type;
-		typedef Compare													value_compare;
+		typedef Compare													compare;
 		typedef NodeType												node_type;
 		typedef NodeAlloc												node_alloc_type;
 		typedef size_t													size_type;
@@ -23,14 +23,14 @@ class binary_search_tree
 	private:
 		node_type*					_root;
 		node_type*					_none;
-		value_compare				_comp;
+		compare						_comp;
 		node_alloc_type				_node_alloc;
 		size_type					_size;
 
 	public:
 		binary_search_tree(const node_alloc_type& init_node_alloc = node_alloc_type())
 		:
-			_comp(value_compare()), _node_alloc(init_node_alloc), _size(0)
+			_comp(compare()), _node_alloc(init_node_alloc), _size(0)
 		{
 			this->_none = _node_alloc.allocate(1);
 			this->_node_alloc.construct(this->_none, node_type(_none, _none, _none));
@@ -39,7 +39,7 @@ class binary_search_tree
 
 		binary_search_tree(const binary_search_tree<value_type> &other, const node_alloc_type& init_node_alloc = node_alloc_type())
 		:
-			_comp(value_compare()), _node_alloc(node_alloc_type(init_node_alloc)), _size(0)
+			_comp(compare()), _node_alloc(node_alloc_type(init_node_alloc)), _size(0)
 		{
 			this->_none = _node_alloc.allocate(1);
 			this->_node_alloc.construct(this->_none, node_type(_none, _none, _none));
@@ -67,7 +67,7 @@ class binary_search_tree
 			return (this->_size);
 		}
 
-		void					copy(const binary_search_tree<T> &other)
+		void					copy(const binary_search_tree<T, Compare> &other)
 		{
 			this->delete_all();
 			copy(other._root);
@@ -116,7 +116,7 @@ class binary_search_tree
 			return (parent);
 		}
 
-		void					erase(iterator position)
+		void					erase(const_iterator position)
 		{
 			erase_case(position->get_ptr());
 		}
@@ -128,7 +128,6 @@ class binary_search_tree
 			node_type	*cur;
 
 			node = construct_node(value);
-
 			if (this->is_empty())
 			{
 				this->_root = node;
@@ -149,16 +148,16 @@ class binary_search_tree
 					delete_node(node);
 					return (pair<node_type *, bool>(cur, false));
 				}
-				else if (_comp(value, *(cur->_value)))
+				else if (_comp(value, cur->get_value()))
 					cur = cur->_left;
-				else if (_comp(*(cur->_value), value))
+				else if (_comp(cur->get_value(), value))
 					cur = cur->_right;
 			}
-			// 루프가 끝나면 none노드에 도착한다.
+			//루프가 끝나면 none노드에 도착한다.
 			cur = node;
 			cur->_left = this->_none;
 			cur->_right = this->_none;
-			if (this->_comp(*(parent->_value), *(cur->_value)))
+			if (this->_comp(parent->get_value(), cur->get_value()))
 				parent->_right = cur;
 			else
 				parent->_left = cur;
@@ -210,7 +209,6 @@ class binary_search_tree
 			delete_node(this->_root);
 			this->_root = this->_none;
 			this->_none->_parent = find_maximum(this->_root);
-			this->_size--;
 		}
 
 		node_type				*find_minimum(node_type *node)
@@ -246,58 +244,128 @@ class binary_search_tree
 			return (node);
 		}
 
-		void					erase(const value_type &value)
+		void					erase(node_type *node)
 		{
-			erase(value, this->_root);
+			erase_case(node);
+		}
+	private:
+		void					init_node(node_type *node)
+		{
+			node->_parent = this->_none;
+			node->_left = this->_none;
+			node->_right = this->_none;
 		}
 
-		void					erase(const value_type &value, node_type *node)
+
+		void					erase_case(node_type *node)
 		{
-			
+			if (node->_left == this->_none && node->_right == this->_none) //자식 노드가 모두 none일때
+				erase_case1(node);
+			else if (node->_left != this->_none && node->_right == this->_none) //오른쪽 노드만 none일때
+				erase_case2(node);
+			else if (node->_left == this->_none && node->_right != this->_none) //왼쪽 노드만 none일때
+				erase_case3(node);
+			else if (node->_left != this->_none && node->_right != this->_none) //양쪽 노드 모두 none일때
+				erase_case4(node);
 		}
-	// private:
-	// 	void					erase_case(node_type *node)
-	// 	{
-	// 		if (node->is_root())
-	// 			delete_root();
-	// 		else if (node->_left == this->_none && node->_right == this->_none)
-	// 			erase_case1(node);
-	// 		else if (node->_left != this->_none && node->_right == this->_none)
-	// 			erase_case2(node);
-	// 		else if (node->_left == this->_none && node->_right != this->_none)
-	// 			erase_case3(node);
-	// 		else if (node->_left != this->_none && node->_right != this->_none)
-	// 			erase_case4(node);
-	// 	}
 
-	// 	void					erase_case1(node_type *node)
-	// 	{
-	// 		if (node->is_left())
-	// 			node->_parent->_left = this->_none;
-	// 		else if (node->is_right())
-	// 			node->_parent->_right = this->_none;
-	// 		delete_node(node);
-	// 	}
+		void					erase_case1(node_type *node)
+		{
+			if (node->is_root())
+				delete_root();
+			else
+			{
+				if (node->_parent != this->_none)
+				{
+					if (node->is_left())
+						node->_parent->_left = this->_none;
+					else if (node->is_right())
+						node->_parent->_right = this->_none;
+				}
+				this->_none->_parent = find_maximum(this->_root);
+				init_node(node);
+				delete_node(node);
+			}
+		}
 
-	// 	void					erase_case2(node_type *node)
-	// 	{
-	// 		node_type	*tmpNode;
+		void					erase_case2(node_type *node)
+		{
+			node_type	*new_node;
 
-	// 		node->_parent->_left = node->_left;
-	// 		node->_left->_parent = node->_parent;
-	// 		delete_node(node);
-	// 	}
+			new_node = node->_left;
+			if (node->is_root())
+			{
+				new_node->_parent = this->_none;
+				this->_root = new_node;
+			}
+			else
+			{
+				if (node->_parent != this->_none)
+					new_node->_parent = node->_parent;
+				if (node->is_left())
+					node->_parent->_left = new_node;
+				else if (node->is_right())
+					node->_parent->_right = new_node;
+				this->_none->_parent = find_maximum(this->_root);
+			}
+			init_node(node);
+			delete_node(node);
+		}
 
-	// 	void					erase_case3(node_type *node)
-	// 	{
-	// 		node->_parent->_right = node->_right;
-	// 		node->_right->_parent = node->_parent;
-	// 		delete_node(node);
-	// 	}
+		void					erase_case3(node_type *node)
+		{
+			node_type	*new_node;
 
-	// 	void					erase_case4(node_type *node)
-	// 	{
-	// 	}
+
+			new_node = node->_right;
+			if (node->is_root())
+			{
+				new_node->_parent = this->_none;
+				this->_root = new_node;
+			}
+			else
+			{
+				if (node->_parent != this->_none)
+					new_node->_parent = node->_parent;
+				if (node->is_left())
+					node->_parent->_left = new_node;
+				else if (node->is_right())
+					node->_parent->_right = new_node;
+				this->_none->_parent = find_maximum(this->_root);
+			}
+			init_node(node);
+			delete_node(node);
+		}
+
+		void					erase_case4(node_type *node)
+		{
+			node_type	*new_node;
+
+			new_node = find_minimum(node->_right);
+			if (node->is_root())
+				this->_root = new_node;
+			if (new_node->_parent != this->_none)
+			{
+				if (new_node->_parent != node)
+					new_node->_parent->_left = new_node->_right;
+			}
+			new_node->_parent = node->_parent;
+			if (node->_parent != this->_none && new_node->_parent != node)
+				new_node->_right = node->_right;
+			new_node->_left = node->_left;
+			if (node->_parent != this->_none)
+			{
+				if (node->is_left())
+					node->_parent->_left = new_node;
+				else
+					node->_parent->_right = new_node;
+			}
+			if (node->_parent != this->_none && new_node->_parent != node)
+				node->_right->_parent = new_node;
+			node->_left->_parent = new_node;
+			init_node(node);
+			delete_node(node);
+		}
 };
 }
 #endif

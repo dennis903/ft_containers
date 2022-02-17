@@ -47,13 +47,10 @@ bool operator!=( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs )
 	return(!(lhs == rhs));
 }
 
-template< class T1, class T2 >
-bool operator<( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs )
-{
-	// std::cout << "operator" << std::endl;
-	// std::cout << lhs.second << " " << rhs.second << std::endl;
-	return (lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second ));
-}
+template <class T1, class T2>
+  bool operator<  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs)
+{ return lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second); }
+
 
 template< class T1, class T2 >
 bool operator<=( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs )
