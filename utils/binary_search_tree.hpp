@@ -349,7 +349,6 @@ class binary_search_tree
 				if (new_node->_parent != node)
 					new_node->_parent->_left = new_node->_right;
 			}
-			new_node->_parent = node->_parent;
 			if (node->_parent != this->_none && new_node->_parent != node)
 				new_node->_right = node->_right;
 			new_node->_left = node->_left;
@@ -363,6 +362,7 @@ class binary_search_tree
 			if (node->_parent != this->_none && new_node->_parent != node)
 				node->_right->_parent = new_node;
 			node->_left->_parent = new_node;
+			new_node->_parent = node->_parent;
 			init_node(node);
 			delete_node(node);
 		}
