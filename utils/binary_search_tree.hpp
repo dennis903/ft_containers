@@ -18,6 +18,7 @@ class binary_search_tree
 		typedef NodeType												node_type;
 		typedef NodeAlloc												node_alloc_type;
 		typedef size_t													size_type;
+		typedef binary_search_tree										self;
 		typedef ft::binary_search_tree_iterator<T, T*, T&>				iterator;
 		typedef ft::binary_search_tree_iterator<T, const T*, const T&>	const_iterator;
 	private:
@@ -188,6 +189,7 @@ class binary_search_tree
 			else
 				node->_parent->_right = this->_none;	
 			delete_node(node);
+			this->_size--;
 		}
 
 		iterator				search_by_key(const value_type &value) const
@@ -209,6 +211,7 @@ class binary_search_tree
 			delete_node(this->_root);
 			this->_root = this->_none;
 			this->_none->_parent = find_maximum(this->_root);
+			this->_size--;
 		}
 
 		node_type				*find_minimum(node_type *node)
@@ -229,7 +232,6 @@ class binary_search_tree
 		{
 			this->_node_alloc.destroy(node);
 			this->_node_alloc.deallocate(node, 1);
-			this->_size--;
 		}
 
 		node_type				*construct_node(const value_type &value)
@@ -247,6 +249,22 @@ class binary_search_tree
 		void					erase(node_type *node)
 		{
 			erase_case(node);
+		}
+
+		void					swap(binary_search_tree &x)
+		{
+			node_type	*temp;
+			size_type	temp_size;
+
+			temp = this->_root;
+			this->_root = x._root;
+			x._root = temp;
+			temp = this->_none;
+			this->_none = x._none;
+			x._none = temp;
+			temp_size = this->_size;
+			this->_size = x._size;
+			x._size = temp_size;
 		}
 	private:
 		void					init_node(node_type *node)
@@ -285,6 +303,7 @@ class binary_search_tree
 				this->_none->_parent = find_maximum(this->_root);
 				init_node(node);
 				delete_node(node);
+				this->_size--;
 			}
 		}
 
@@ -310,6 +329,7 @@ class binary_search_tree
 			}
 			init_node(node);
 			delete_node(node);
+			this->_size--;
 		}
 
 		void					erase_case3(node_type *node)
@@ -335,6 +355,7 @@ class binary_search_tree
 			}
 			init_node(node);
 			delete_node(node);
+			this->_size--;
 		}
 
 		void					erase_case4(node_type *node)
@@ -349,7 +370,7 @@ class binary_search_tree
 				if (new_node->_parent != node)
 					new_node->_parent->_left = new_node->_right;
 			}
-			if (node->_parent != this->_none && new_node->_parent != node)
+			if (new_node->_parent != node)
 				new_node->_right = node->_right;
 			new_node->_left = node->_left;
 			if (node->_parent != this->_none)
@@ -359,12 +380,13 @@ class binary_search_tree
 				else
 					node->_parent->_right = new_node;
 			}
-			if (node->_parent != this->_none && new_node->_parent != node)
+			if (new_node->_parent != node)
 				node->_right->_parent = new_node;
 			node->_left->_parent = new_node;
 			new_node->_parent = node->_parent;
 			init_node(node);
 			delete_node(node);
+			this->_size--;
 		}
 };
 }

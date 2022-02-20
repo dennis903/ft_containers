@@ -50,18 +50,18 @@ class	map
 		//constructor
 
 	private:
+		tree_type								_tree;
 		key_compare								_comp;
 		allocator_type							_alloc;
 	public:
 		//constructor
-		tree_type								_tree;
 		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
-			:   _comp(comp), _alloc(alloc), _tree()
+			:	_tree(), _comp(comp), _alloc(alloc)
 		{}
 
 		template <class InputIterator>
 		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
-			: _comp(comp), _alloc(alloc), _tree()
+			: _tree(), _comp(comp), _alloc(alloc)
 		{
 			insert(first, last);
 		}
@@ -316,11 +316,7 @@ class	map
 
 		void					swap(map& x)
 		{
-			map		tmp;
-
-			tmp = *this;
-			*this = x;
-			x = tmp;
+			this->_tree.swap(x._tree);
 		}
 
 		value_compare			value_comp() const
