@@ -104,12 +104,13 @@ class	vector
 		//operator =
 		vector& operator=(const vector& other)
 		{
-			this->_size = other._size;
-			this->_capacity = other._capacity;
-			this->_alloc = allocate_type();
-			this->_arr = _alloc.allocate(_capacity);
-			for (size_type i = 0; i < other.size(); i++)
-				_arr[i] = other._arr[i];
+			this->assign(other.begin(), other.end());
+			// this->_size = other._size;
+			// this->_capacity = other._capacity;
+			// this->_alloc = allocate_type();
+			// this->_arr = _alloc.allocate(_capacity);
+			// for (size_type i = 0; i < other.size(); i++)
+			// 	_arr[i] = other._arr[i];
 			return (*this);
 		}
 		//Member function
@@ -121,7 +122,7 @@ class	vector
 				this->_arr = nullptr;
 			}
 			this->_size = count;
-			this->_capacity = count;
+			reserve(count);
 			this->_alloc = allocate_type();
 			this->_arr = _alloc.allocate(_capacity);
 			for (size_type i = 0; i < count; i++)
@@ -139,7 +140,7 @@ class	vector
 				_arr = nullptr;
 			}
 			this->_size = gap;
-			this->_capacity = gap;
+			reserve(gap);
 			_alloc = allocate_type();
 			_arr = _alloc.allocate(_capacity);
 			// size_type iter_size = 0;
