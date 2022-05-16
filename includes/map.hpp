@@ -73,7 +73,6 @@ class	map
 		//destructor
 		~map()
 		{
-			erase(this->begin(), this->end());
 		}
 
 		//operator =

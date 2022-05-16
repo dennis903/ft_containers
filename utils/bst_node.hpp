@@ -34,7 +34,7 @@ class bst_node
 				_alloc.construct(this->_value, value);
 		}
 
-		bst_node(const bst_node<T> *other)
+		bst_node(const bst_node<T> &other)
 		:
 			_alloc(allocate_type()), _parent(NULL), _left(NULL), _right(NULL)
 		{
@@ -44,11 +44,11 @@ class bst_node
 
 		~bst_node()
 		{
-			// if (this->_value != NULL)
-			// {
-			// 	this->_alloc.destroy(this->_value);
-			// 	this->_alloc.deallocate(this->_value, 1);
-			// }
+			if (this->_value != NULL)
+			{
+				this->_alloc.destroy(this->_value);
+				this->_alloc.deallocate(this->_value, 1);
+			}
 		}
 
 		bst_node &operator=(const bst_node<T> &other)

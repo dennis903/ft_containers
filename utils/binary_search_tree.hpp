@@ -34,7 +34,9 @@ class binary_search_tree
 			_comp(compare()), _node_alloc(init_node_alloc), _size(0)
 		{
 			this->_none = _node_alloc.allocate(1);
-			this->_node_alloc.construct(this->_none, node_type(_none, _none, _none));
+			this->_none->_parent = this->_none;
+			this->_none->_left = this->_none;
+			this->_none->_right = this->_none;	
 			this->_root = this->_none;
 		}
 
@@ -43,7 +45,9 @@ class binary_search_tree
 			_comp(compare()), _node_alloc(node_alloc_type(init_node_alloc)), _size(0)
 		{
 			this->_none = _node_alloc.allocate(1);
-			this->_node_alloc.construct(this->_none, node_type(_none, _none, _none));
+			this->_none->_parent = this->_none;
+			this->_none->_left = this->_none;
+			this->_none->_right = this->_none;	
 			this->_root = this->_none;
 			this->copy(other);
 		}
@@ -179,15 +183,15 @@ class binary_search_tree
 				return ;
 			delete_all(node->_left);
 			delete_all(node->_right);
-			if (node->is_root())
-			{
-				delete_root();
-				return ;
-			}
-			else if (node->is_left())
-				node->_parent->_left = this->_none;
-			else
-				node->_parent->_right = this->_none;	
+			// if (node->is_root())
+			// {
+			// 	delete_root();
+			// 	return ;
+			// }
+			// else if (node->is_left())
+			// 	node->_parent->_left = this->_none;
+			// else
+			// 	node->_parent->_right = this->_none;	
 			delete_node(node);
 			this->_size--;
 		}
