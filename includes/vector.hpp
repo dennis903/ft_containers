@@ -84,11 +84,7 @@ class	vector
 		vector(const vector& other)
 		: _arr(0), _size(0), _capacity(0), _alloc(allocate_type())
 		{
-			this->_size = other.size();
-			this->_capacity = other.capacity();
-			_arr = this->_alloc.allocate(this->_capacity);
-			for (size_type i = 0; i < other.size(); i++)
-				_arr[i] = other._arr[i];
+			*(this) = other;
 		}
 
 		//destructor
@@ -116,13 +112,13 @@ class	vector
 		//Member function
 		void assign(size_type count, const T& value)
 		{
+			this->reserve(count);
 			if (_arr != nullptr)
 			{
 				_alloc.deallocate(this->_arr, this->_capacity);
 				this->_arr = nullptr;
 			}
 			this->_size = count;
-			reserve(count);
 			this->_alloc = allocate_type();
 			this->_arr = _alloc.allocate(_capacity);
 			for (size_type i = 0; i < count; i++)
@@ -140,7 +136,7 @@ class	vector
 				_arr = nullptr;
 			}
 			this->_size = gap;
-			reserve(gap);
+			this->reserve(gap);
 			_alloc = allocate_type();
 			_arr = _alloc.allocate(_capacity);
 			// size_type iter_size = 0;
@@ -270,6 +266,10 @@ class	vector
 
 		void reserve (size_type new_cap)
 		{
+			if (new_cap > this->max_size())
+			{
+				throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
+			}
 			if (new_cap > this->_capacity && new_cap != 0)
 			{
 				ft::vector<value_type> cp(ft::vector<value_type>(*this));
@@ -403,7 +403,7 @@ class	vector
 
 		void pop_back()
 		{
-			erase(end() - 1);
+			this->_alloc.destroy(this->_arr + --this->_size);
 		}
 
 		void swap(vector &other)
