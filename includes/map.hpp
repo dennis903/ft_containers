@@ -71,7 +71,10 @@ class	map
 			*this = x;
 		}
 		//destructor
-		~map() {}
+		~map()
+		{
+			erase(this->begin(), this->end());
+		}
 
 		//operator =
 		map&	operator=(const map& x)

@@ -126,28 +126,28 @@ class	vector
 		}
 
 		template <class InputIterator>
-		void assign(InputIterator first, InputIterator last,
-			typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
-		{
-			difference_type gap = ft::distance(first, last);
-			if (_arr != nullptr)
-			{
-				_alloc.deallocate(this->_arr, this->_capacity);
-				_arr = nullptr;
-			}
-			this->_size = gap;
-			this->reserve(gap);
-			_alloc = allocate_type();
-			_arr = _alloc.allocate(_capacity);
-			// size_type iter_size = 0;
-			// for (iterator iter = first; iter != last; iter++)
-			// 	iter_size++;
-			for (size_type i = 0; i < _size; i++)
-			{
-				this->_arr[i] = value_type(*first);
-				*first++;
-			}
-		}
+        void assign(InputIterator first, InputIterator last,
+            typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
+        {
+            difference_type gap = ft::distance(first, last);
+            if (_arr != nullptr)
+            {
+                _alloc.deallocate(this->_arr, this->_capacity);
+                _arr = nullptr;
+            }
+            this->_size = gap;
+            this->_capacity = gap;
+            _alloc = allocate_type();
+            _arr = _alloc.allocate(_capacity);
+            // size_type iter_size = 0;
+            // for (iterator iter = first; iter != last; iter++)
+            //  iter_size++;
+            for (size_type i = 0; i < _size; i++)
+            {
+                this->_arr[i] = value_type(*first);
+                *first++;
+            }
+        }
 
 		allocate_type get_allocator() const
 		{

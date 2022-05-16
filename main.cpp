@@ -6,7 +6,7 @@
 /*   By: hyeolee <hyeolee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 16:35:21 by jeongwle          #+#    #+#             */
-/*   Updated: 2022/04/25 16:26:34 by hyeolee          ###   ########.fr       */
+/*   Updated: 2022/05/16 14:40:46 by hyeolee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -2069,8 +2069,8 @@ void VectorTest(void){
 */
 
 int main(void){
-    VectorTest();
-    StackTest();
+    // VectorTest();
+    // StackTest();
     MapTest();
     system("leaks a.out");
     return (0);
