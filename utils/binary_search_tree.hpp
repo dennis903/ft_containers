@@ -34,6 +34,7 @@ class binary_search_tree
 			_comp(compare()), _node_alloc(init_node_alloc), _size(0)
 		{
 			this->_none = _node_alloc.allocate(1);
+			this->_none->_value = NULL;
 			this->_none->_parent = this->_none;
 			this->_none->_left = this->_none;
 			this->_none->_right = this->_none;	
@@ -45,6 +46,7 @@ class binary_search_tree
 			_comp(compare()), _node_alloc(node_alloc_type(init_node_alloc)), _size(0)
 		{
 			this->_none = _node_alloc.allocate(1);
+			this->_none->_value = NULL;
 			this->_none->_parent = this->_none;
 			this->_none->_left = this->_none;
 			this->_none->_right = this->_none;	
@@ -234,6 +236,11 @@ class binary_search_tree
 
 		void					delete_node(node_type *node)
 		{
+			if (node->_value != NULL)
+			{
+				node->_alloc.destroy(node->_value);
+				node->_alloc.deallocate(node->_value, 1);
+			}
 			this->_node_alloc.destroy(node);
 			this->_node_alloc.deallocate(node, 1);
 		}

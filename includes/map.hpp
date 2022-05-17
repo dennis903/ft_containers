@@ -131,7 +131,7 @@ class	map
 
 		void					clear()
 		{
-			this->_tree.delete_all();
+			this->erase(begin(), end());
 		}
 
 		size_type				count(const key_type& k) const
