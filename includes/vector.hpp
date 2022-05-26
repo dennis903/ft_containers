@@ -101,12 +101,6 @@ class	vector
 		vector& operator=(const vector& other)
 		{
 			this->assign(other.begin(), other.end());
-			// this->_size = other._size;
-			// this->_capacity = other._capacity;
-			// this->_alloc = allocate_type();
-			// this->_arr = _alloc.allocate(_capacity);
-			// for (size_type i = 0; i < other.size(); i++)
-			// 	_arr[i] = other._arr[i];
 			return (*this);
 		}
 		//Member function
@@ -139,9 +133,6 @@ class	vector
             this->_capacity = gap;
             _alloc = allocate_type();
             _arr = _alloc.allocate(_capacity);
-            // size_type iter_size = 0;
-            // for (iterator iter = first; iter != last; iter++)
-            //  iter_size++;
             for (size_type i = 0; i < _size; i++)
             {
                 this->_arr[i] = value_type(*first);

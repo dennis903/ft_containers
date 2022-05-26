@@ -585,12 +585,6 @@ void MapTest(void){
     ftFindResult = ftMapSwap2.find('f');
     fout << "|  ft map | findIter first = " << "\'" << ftFindResult->first << "\'" << " | findIter second = " << ftFindResult->second << std::endl;
 
-    // fout << "|" << std::setw(56) << "find 'z' -> undefined behavior" << std::setw(24) << "|" << std::endl;
-    // stdFindResult = stdMapSwap2.find('z');
-    // fout << "| std map | findIter first = " << "\'" << stdFindResult->first << "\'" << " | findIter second = " << stdFindResult->second << std::endl;
-    // ftFindResult = ftMapSwap2.find('z');
-    // fout << "|  ft map | findIter first = " << "\'" << ftFindResult->first << "\'" << " | findIter second = " << ftFindResult->second << std::endl;
-
     size_t stdCountResult = 0;
     size_t ftCountResult = 0;
     fout << "--------------------------------------------------------------------------------" << std::endl;
@@ -678,18 +672,6 @@ void MapTest(void){
     fout << "| std map | result first = " << "\'" << stdBoundResult->first << "\'" << " | result second = " << stdBoundResult->second << std::endl;
     fout << "|  ft map | result first = " << "\'" << ftBoundResult->first << "\'" << " | result second = " << ftBoundResult->second << std::endl;
 
-    // fout << "|" << std::setw(46) << "bound 'k'" << std::setw(34) << "|" << std::endl;
-    // stdBoundResult = stdMapBound.upper_bound('k');
-    // ftBoundResult = ftMapBound.upper_bound('k');
-    // fout << "| std map | result first = " << "\'" << stdBoundResult->first << "\'" << " | result second = " << stdBoundResult->second << std::endl;
-    // fout << "|  ft map | result first = " << "\'" << ftBoundResult->first << "\'" << " | result second = " << ftBoundResult->second << std::endl;
-
-    // fout << "|" << std::setw(46) << "bound 'z'" << std::setw(34) << "|" << std::endl;
-    // stdBoundResult = stdMapBound.upper_bound('z');
-    // ftBoundResult = ftMapBound.upper_bound('z');
-    // fout << "| std map | result first = " << "\'" << stdBoundResult->first << "\'" << " | result second = " << stdBoundResult->second << std::endl;
-    // fout << "|  ft map | result first = " << "\'" << ftBoundResult->first << "\'" << " | result second = " << ftBoundResult->second << std::endl;
-
     std::pair<std::map<char, int>::iterator, std::map<char, int>::iterator> stdEqualRangeResult;
     ft::pair<ft::map<char, int>::iterator, ft::map<char, int>::iterator> ftEqualRangeResult;
     fout << "--------------------------------------------------------------------------------" << std::endl;
@@ -719,22 +701,6 @@ void MapTest(void){
     fout << "|         | pair second : iter->first = " << "\'" << stdEqualRangeResult.second->first << "\'" << " | iter->second = " << stdEqualRangeResult.second->second << std::endl;
     fout << "|  ft map | pair first  : iter->first = " << "\'" << ftEqualRangeResult.first->first << "\'" << " | iter->second = " << ftEqualRangeResult.first->second << std::endl;
     fout << "|         | pair second : iter->first = " << "\'" << ftEqualRangeResult.second->first << "\'" << " | iter->second = " << ftEqualRangeResult.second->second << std::endl;
-
-    // fout << "|" << std::setw(46) << "param 'k'" << std::setw(34) << "|" << std::endl;
-    // stdEqualRangeResult = stdMapBound.equal_range('k');
-    // ftEqualRangeResult = ftMapBound.equal_range('k');
-    // fout << "| std map | pair first  : iter->first = " << "\'" << stdEqualRangeResult.first->first << "\'" << " | iter->second = " << stdEqualRangeResult.first->second << std::endl;
-    // fout << "|         | pair second : iter->first = " << "\'" << stdEqualRangeResult.second->first << "\'" << " | iter->second = " << stdEqualRangeResult.second->second << std::endl;
-    // fout << "|  ft map | pair first  : iter->first = " << "\'" << ftEqualRangeResult.first->first << "\'" << " | iter->second = " << ftEqualRangeResult.first->second << std::endl;
-    // fout << "|         | pair second : iter->first = " << "\'" << ftEqualRangeResult.second->first << "\'" << " | iter->second = " << ftEqualRangeResult.second->second << std::endl;
-
-    // fout << "|" << std::setw(46) << "param 'z'" << std::setw(34) << "|" << std::endl;
-    // stdEqualRangeResult = stdMapBound.equal_range('z');
-    // ftEqualRangeResult = ftMapBound.equal_range('z');
-    // fout << "| std map | pair first  : iter->first = " << "\'" << stdEqualRangeResult.first->first << "\'" << " | iter->second = " << stdEqualRangeResult.first->second << std::endl;
-    // fout << "|         | pair second : iter->first = " << "\'" << stdEqualRangeResult.second->first << "\'" << " | iter->second = " << stdEqualRangeResult.second->second << std::endl;
-    // fout << "|  ft map | pair first  : iter->first = " << "\'" << ftEqualRangeResult.first->first << "\'" << " | iter->second = " << ftEqualRangeResult.first->second << std::endl;
-    // fout << "|         | pair second : iter->first = " << "\'" << ftEqualRangeResult.second->first << "\'" << " | iter->second = " << ftEqualRangeResult.second->second << std::endl;
 
     std::map<char, int> stdMapOperator1;
     std::map<char, int> stdMapOperator2;

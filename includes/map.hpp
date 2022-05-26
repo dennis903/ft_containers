@@ -73,6 +73,7 @@ class	map
 		//destructor
 		~map()
 		{
+			this->erase(this->begin(), this->end());
 		}
 
 		//operator =
@@ -80,6 +81,7 @@ class	map
 		{
 			this->_alloc = x._alloc;
 			this->_comp = x._comp;
+			this->erase(this->begin(), this->end());
 			this->_tree.copy(x._tree);
 			return (*this);
 		}

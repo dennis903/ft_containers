@@ -13,7 +13,7 @@ template< class T, class Compare = ft::less<T>, class NodeType = ft::bst_node<T>
 class binary_search_tree
 {
 	public:
-		typedef T														value_type;
+		typedef T																value_type;
 		typedef Compare													compare;
 		typedef NodeType												node_type;
 		typedef NodeAlloc												node_alloc_type;
@@ -55,7 +55,6 @@ class binary_search_tree
 		}
 		~binary_search_tree()
 		{
-			delete_all();
 			delete_node(this->_none);
 		}
 
@@ -76,9 +75,6 @@ class binary_search_tree
 
 		void					copy(const binary_search_tree<T, Compare> &other)
 		{
-			// if (!(this->_root == this->_none)){
-			// 	this->delete_all();
-			// }
 			copy(other._root);
 		}
 
@@ -187,15 +183,6 @@ class binary_search_tree
 				return ;
 			delete_all(node->_left);
 			delete_all(node->_right);
-			// if (node->is_root())
-			// {
-			// 	delete_root();
-			// 	return ;
-			// }
-			// else if (node->is_left())
-			// 	node->_parent->_left = this->_none;
-			// else
-			// 	node->_parent->_right = this->_none;	
 			delete_node(node);
 			this->_size--;
 		}
@@ -290,7 +277,9 @@ class binary_search_tree
 
 		void					erase_case(node_type *node)
 		{
-			if (node->_left == this->_none && node->_right == this->_none) //자식 노드가 모두 none일때
+			if (node == this->_none)
+				return ;
+			else if (node->_left == this->_none && node->_right == this->_none) //자식 노드가 모두 none일때
 				erase_case1(node);
 			else if (node->_left != this->_none && node->_right == this->_none) //오른쪽 노드만 none일때
 				erase_case2(node);
