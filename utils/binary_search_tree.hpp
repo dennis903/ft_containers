@@ -76,7 +76,9 @@ class binary_search_tree
 
 		void					copy(const binary_search_tree<T, Compare> &other)
 		{
-			this->delete_all();
+			// if (!(this->_root == this->_none)){
+			// 	this->delete_all();
+			// }
 			copy(other._root);
 		}
 
